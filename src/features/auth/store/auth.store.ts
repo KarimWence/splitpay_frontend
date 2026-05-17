@@ -1,5 +1,6 @@
 import { create } from 'zustand'
 import type { User } from '../types/auth.types'
+import { persist } from 'zustand/middleware'
 
 interface AuthState {
   user: User | null
@@ -14,22 +15,31 @@ interface AuthState {
   logout: () => void
 }
 
-export const useAuthStore = create<AuthState>((set) => ({
-  user: null,
-  accessToken: null,
-  isAuthenticated: false,
+export const useAuthStore =
+  create<AuthState>()(
+    persist(
+      (set) => ({
+        user: null,
+        accessToken: null,
+        isAuthenticated: false,
 
-  setAuth: ({ user, accessToken }) =>
-    set({
-      user,
-      accessToken,
-      isAuthenticated: true,
-    }),
+        setAuth: (data) =>
+          set({
+            user: data.user,
+            accessToken: data.accessToken,
+            isAuthenticated: true,
+          }),
 
-  logout: () =>
-    set({
-      user: null,
-      accessToken: null,
-      isAuthenticated: false,
-    }),
-}))
+        logout: () =>
+          set({
+            user: null,
+            accessToken: null,
+            isAuthenticated: false,
+          }),
+      }),
+
+      {
+        name: 'splitpay-auth',
+      }
+    )
+  )
