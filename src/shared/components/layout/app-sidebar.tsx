@@ -2,7 +2,7 @@ export const AppSidebar = () => {
   return (
     <aside className='flex w-[260px] flex-col border-r border-gray-200 bg-white px-6 py-8'>
       <div>
-        <h1 className='text-4xl font-bold text-indigo-600'>
+        <h1 className='text-4xl font-bold text-blue-700'>
           SplitPay
         </h1>
 
@@ -12,7 +12,7 @@ export const AppSidebar = () => {
       </div>
 
       <nav className='mt-14 flex flex-col gap-3'>
-        <button className='flex h-12 items-center rounded-xl bg-indigo-50 px-4 font-medium text-indigo-600'>
+        <button className='flex h-12 items-center rounded-xl bg-blue-50 px-4 font-medium text-indigo-600'>
           Dashboard
         </button>
 
@@ -30,7 +30,7 @@ export const AppSidebar = () => {
       </nav>
 
       <div className='mt-auto'>
-        <button className='h-14 w-full rounded-2xl bg-indigo-600 font-semibold text-white shadow-lg transition hover:bg-indigo-700'>
+        <button className='h-14 w-full rounded-2xl bg-blue-700 font-semibold text-white shadow-lg transition hover:bg-blue-800'>
           Add Expense
         </button>
       </div>

@@ -22,7 +22,7 @@ export const AppNavbar = () => {
           <Settings size={22} />
         </button>
 
-        <div className='flex h-11 w-11 items-center justify-center rounded-full bg-indigo-600 font-semibold text-white'>
+        <div className='flex h-11 w-11 items-center justify-center rounded-full bg-blue-700 font-semibold text-white'>
           JD
         </div>
       </div>
