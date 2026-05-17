@@ -1,6 +1,7 @@
 import { Mail, Lock, AlertCircle } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Link } from 'react-router-dom';
 
 import {
     loginSchema,
@@ -170,9 +171,12 @@ export const LoginForm = () => {
             <div className='mt-10 text-center text-sm text-gray-500'>
                 Don&apos;t have an account?{' '}
 
-                <button className='font-semibold text-blue-700 hover:text-blue-800'>
-                Create Account
-                </button>
+                <Link
+                    to='/register'
+                    className='font-semibold text-blue-700 hover:text-blue-800'
+                >
+                    Create Account
+                </Link>
             </div>
         </div>
     )

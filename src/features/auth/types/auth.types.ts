@@ -16,3 +16,11 @@ export interface AuthResponse {
     accessToken: string;
     user: User;
 }
+
+export interface RegisterDto {
+    name: string;
+    lastname: string;
+    email: string;
+    password: string;
+}
+
