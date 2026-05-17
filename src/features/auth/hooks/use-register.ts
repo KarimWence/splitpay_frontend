@@ -17,7 +17,7 @@ export const useRegister = () => {
             navigate('/dashboard');
         },
 
-        onError: () => {
+        onError: (error) => {
             toast.error('Registration failed. Please try again.');
         },
     })

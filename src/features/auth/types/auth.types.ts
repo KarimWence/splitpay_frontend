@@ -19,7 +19,7 @@ export interface AuthResponse {
 
 export interface RegisterDto {
     name: string;
-    lastname: string;
+    lastName: string;
     email: string;
     password: string;
 }

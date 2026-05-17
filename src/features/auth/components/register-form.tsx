@@ -22,19 +22,21 @@ export const RegisterForm = () => {
         resolver: zodResolver(registerSchema),
         defaultValues: {
             name: '',
-            lastname: '',
+            lastName: '',
             email: '',
             password: '',
-            confirmPassword: '',
         },
     })
+
+    console.log(errors)
 
     const password = watch('password');
 
     const onSubmit = (data: RegisterSchema) => {
+        console.log('REGISTER DATA', data)
         registerMutation.mutate({
             name: data.name,
-            lastname: data.lastname,
+            lastName: data.lastName,
             email: data.email,
             password: data.password,
         })
@@ -59,23 +61,46 @@ export const RegisterForm = () => {
 
                 <div>
                     <label className='mb-2 block text-sm font-medium text-gray-700'>
-                        Full Name
+                        First Name
                     </label>
 
                     <div className='relative'>
                         <User className='absolute top-1/2 left-4 h-5 w-5 -translate-y-1/2 text-gray-400' />
 
                         <input
-                            type='text'
-                            placeholder='John Doe'
-                            className='h-14 w-full rounded-xl border border-gray-300 bg-white pl-12 pr-4 outline-none transition focus:border-blue-600'
-                            {...register('name')}
+                        type='text'
+                        placeholder='John'
+                        className='h-14 w-full rounded-xl border border-gray-300 bg-white pl-12 pr-4 outline-none transition focus:border-blue-600'
+                        {...register('name')}
                         />
                     </div>
 
                     {errors.name && (
                         <p className='mt-2 text-sm text-red-500'>
-                            {errors.name.message}
+                        {errors.name.message}
+                        </p>
+                    )}
+                </div>
+
+                <div>
+                    <label className='mb-2 block text-sm font-medium text-gray-700'>
+                        Last Name
+                    </label>
+
+                    <div className='relative'>
+                        <User className='absolute top-1/2 left-4 h-5 w-5 -translate-y-1/2 text-gray-400' />
+
+                        <input
+                        type='text'
+                        placeholder='Doe'
+                        className='h-14 w-full rounded-xl border border-gray-300 bg-white pl-12 pr-4 outline-none transition focus:border-blue-600'
+                        {...register('lastName')}
+                        />
+                    </div>
+
+                    {errors.lastName && (
+                        <p className='mt-2 text-sm text-red-500'>
+                        {errors.lastName.message}
                         </p>
                     )}
                 </div>
