@@ -1,16 +1,33 @@
-import { Bell } from 'lucide-react'
+import { Bell, Menu } from 'lucide-react'
 
 import { Settings } from 'lucide-react'
 
-export const AppNavbar = () => {
+import { useAuthStore } from '@/features/auth/store/auth.store'
+
+interface Props {
+    onOpenSidebar: () => void
+}
+
+export const AppNavbar = ({onOpenSidebar,}: Props) => {
+    const user = useAuthStore((state) => state.user)
+    const initials = `${user?.name?.[0] ?? ''}${user?.lastname?.[0] ?? ''}`
   return (
-    <header className='flex h-20 items-center justify-between border-b border-gray-200 bg-white px-8'>
-      <div className='flex h-12 w-[320px] items-center rounded-xl border border-gray-200 bg-gray-50 px-4'>
-        <input
-          type='text'
-          placeholder='Search groups...'
-          className='w-full bg-transparent outline-none'
-        />
+    <header className='flex h-20 items-center justify-between border-b border-gray-200 bg-white px-4 md:px-8'>
+      <div className='flex items-center gap-4'>
+        <button
+          onClick={onOpenSidebar}
+          className='md:hidden'
+        >
+          <Menu size={28} />
+        </button>
+
+        <div className='hidden h-12 w-[320px] items-center rounded-xl border border-gray-200 bg-gray-50 px-4 md:flex'>
+          <input
+            type='text'
+            placeholder='Search groups...'
+            className='w-full bg-transparent outline-none'
+          />
+        </div>
       </div>
 
       <div className='flex items-center gap-5'>
@@ -23,7 +40,7 @@ export const AppNavbar = () => {
         </button>
 
         <div className='flex h-11 w-11 items-center justify-center rounded-full bg-blue-700 font-semibold text-white'>
-          JD
+          {initials}
         </div>
       </div>
     </header>

@@ -13,6 +13,12 @@ import { ProtectedRoute } from '@/features/auth/components/protected-route'
 
 import { DashboardPage } from '@/features/dashboard/pages/dashboard-page'
 
+import { GroupsPage } from '@/features/groups/pages/groups-page'
+
+import { ActivityPage } from '@/features/activity/pages/activity-page'
+
+import { ProfilePage } from '@/features/profile/pages/profile-page'
+
 export const AppRouter = () => {
   return (
     <BrowserRouter>
@@ -43,6 +49,33 @@ export const AppRouter = () => {
           element={
             <ProtectedRoute>
               <DashboardPage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path='/groups'
+          element={
+            <ProtectedRoute>
+              <GroupsPage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path='/activity'
+          element={
+            <ProtectedRoute>
+              <ActivityPage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path='/profile'
+          element={
+            <ProtectedRoute>
+              <ProfilePage />
             </ProtectedRoute>
           }
         />

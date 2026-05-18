@@ -19,7 +19,7 @@ export const DashboardPage = () => {
             </p>
           </div>
 
-          <div className='grid grid-cols-3 gap-8'>
+          <div className='grid grid-cols-1 lg:grid-cols-3 gap-8'>
             <GroupCard
               title='Trip to Spain'
               members={4}
