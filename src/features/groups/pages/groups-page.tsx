@@ -6,12 +6,16 @@ import { useGroups } from '../hooks/use-groups'
 
 import { CreateGroupModal } from '../components/create-group-modal'
 
+import { useNavigate } from 'react-router-dom'
+
 export const GroupsPage = () => {
   const { data, isLoading } =
     useGroups()
 
   const [isCreateOpen, setIsCreateOpen] =
     useState(false)
+
+  const navigate = useNavigate()
 
   return (
     <DashboardLayout>
@@ -118,8 +122,15 @@ export const GroupsPage = () => {
                       </p>
                     </div>
 
-                    <button className='rounded-xl bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-200'>
-                      Open
+                    <button
+                        onClick={() =>
+                            navigate(
+                                `/groups/${group._id}`
+                            )
+                        }
+                        className='rounded-xl bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-200'
+                    >
+                        Open
                     </button>
                   </div>
                 </div>

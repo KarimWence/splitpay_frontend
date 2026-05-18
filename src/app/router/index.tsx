@@ -19,6 +19,8 @@ import { ActivityPage } from '@/features/activity/pages/activity-page'
 
 import { ProfilePage } from '@/features/profile/pages/profile-page'
 
+import { GroupDetailsPage } from '@/features/groups/pages/group-details-page'
+
 export const AppRouter = () => {
   return (
     <BrowserRouter>
@@ -76,6 +78,15 @@ export const AppRouter = () => {
           element={
             <ProtectedRoute>
               <ProfilePage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path='/groups/:groupId'
+          element={
+            <ProtectedRoute>
+              <GroupDetailsPage />
             </ProtectedRoute>
           }
         />
