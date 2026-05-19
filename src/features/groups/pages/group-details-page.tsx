@@ -8,6 +8,8 @@ import { useGroupExpenses } from '@/features/expenses/hooks/use-group-expenses'
 
 import { AddExpenseModal } from '@/features/expenses/components/add-expense-modal'
 
+import { useGroup } from '../hooks/use-groups'
+
 export const GroupDetailsPage = () => {
     const { groupId } = useParams()
 
@@ -21,18 +23,22 @@ export const GroupDetailsPage = () => {
         groupId || ''
     )
 
+    const { data: group } = useGroup(
+        groupId || ''
+    )
+
     return (
         <DashboardLayout>
             <div className='space-y-10'>
                 <div className='flex flex-col justify-between gap-6 md:flex-row md:items-center'>
                     <div>
                         <h1 className='text-4xl font-bold text-gray-900'>
-                            Group Expenses
+                            {group?.name || 'Group'}
                         </h1>
 
                         <p className='mt-2 text-gray-500'>
-                            Track shared expenses
-                            and balances
+                            {group?.members.length || 0}{' '}
+                            members
                         </p>
                     </div>
 

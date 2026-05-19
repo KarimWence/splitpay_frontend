@@ -14,6 +14,17 @@ export const getGroupsRequest =
         return response.data
     }
 
+export const getGroupRequest =
+    async (
+        groupId: string
+    ): Promise<Group> => {
+        const response = await api.get(
+            `/expenses/groups/${groupId}`
+        )
+
+        return response.data
+    }
+
 export const createGroupRequest = async (
     data: CreateGroupDto
 ): Promise<Group> => {
