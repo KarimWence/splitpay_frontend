@@ -2,6 +2,8 @@ import { api } from '@/shared/services/api'
 
 import type { Expense } from '../types/expense.types'
 
+import type { Balance } from '../types/balance.types'
+
 export const getGroupExpensesRequest =
     async (
         groupId: string
@@ -12,7 +14,7 @@ export const getGroupExpensesRequest =
 
         return response.data
     }
-    
+
 interface CreateExpenseDto {
     groupId: string
 
@@ -29,4 +31,17 @@ export const createExpenseRequest =
             '/expenses/expense',
             data
         )
+    }
+
+export const getGroupBalancesRequest =
+    async (
+        groupId: string
+    ): Promise<
+        Record<string, number>
+    > => {
+        const response = await api.get(
+            `/expenses/groups/${groupId}/balances`
+        )
+
+        return response.data
     }

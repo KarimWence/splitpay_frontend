@@ -12,6 +12,8 @@ import { useGroup } from '../hooks/use-groups'
 
 import { AddMemberModal } from '../components/add-member-modal'
 
+import { useGroupBalances } from '@/features/expenses/hooks/use-group-expenses'
+
 export const GroupDetailsPage = () => {
     const { groupId } = useParams()
 
@@ -31,6 +33,11 @@ export const GroupDetailsPage = () => {
 
     const [isAddMemberOpen, setIsAddMemberOpen] =
         useState(false)
+
+    const { data: balances } =
+        useGroupBalances(
+            groupId || ''
+        )
 
     return (
         <DashboardLayout>
@@ -94,6 +101,72 @@ export const GroupDetailsPage = () => {
                                         className='rounded-2xl bg-gray-100 px-4 py-3 text-sm font-medium text-gray-700'
                                     >
                                         {memberId}
+                                    </div>
+                                )
+                            )}
+                        </div>
+                    </div>
+                )}
+
+                {balances && (
+                    <div className='rounded-3xl border border-gray-200 bg-white p-6 shadow-sm'>
+                        <div className='flex items-center justify-between'>
+                            <div>
+                                <h2 className='text-2xl font-bold text-gray-900'>
+                                    Balances
+                                </h2>
+
+                                <p className='mt-2 text-gray-500'>
+                                    Current group balances
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className='mt-6 space-y-3'>
+                            {Object.entries(
+                                balances
+                            ).map(
+                                ([
+                                    userId,
+                                    balance,
+                                ]) => (
+                                    <div
+                                        key={userId}
+                                        className='flex items-center justify-between rounded-2xl bg-gray-50 px-5 py-4'
+                                    >
+                                        <div>
+                                            <p className='font-medium text-gray-900'>
+                                                {userId}
+                                            </p>
+
+                                            <p className='mt-1 text-sm text-gray-500'>
+                                                {balance >
+                                                    0
+                                                    ? 'Gets back'
+                                                    : balance <
+                                                        0
+                                                        ? 'Owes'
+                                                        : 'Settled'}
+                                            </p>
+                                        </div>
+
+                                        <p
+                                            className={`text-xl font-bold ${balance >
+                                                    0
+                                                    ? 'text-green-600'
+                                                    : balance <
+                                                        0
+                                                        ? 'text-red-600'
+                                                        : 'text-gray-500'
+                                                }`}
+                                        >
+                                            $
+                                            {Math.abs(
+                                                balance
+                                            ).toFixed(
+                                                2
+                                            )}
+                                        </p>
                                     </div>
                                 )
                             )}

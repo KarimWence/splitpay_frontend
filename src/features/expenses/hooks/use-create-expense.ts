@@ -25,6 +25,13 @@ export const useCreateExpense = (
                     groupId,
                 ],
             })
+
+            queryClient.invalidateQueries({
+                queryKey: [
+                    'group-balances',
+                    groupId,
+                ],
+            })
         },
 
         onError: () => {
