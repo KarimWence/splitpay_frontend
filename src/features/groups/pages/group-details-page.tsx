@@ -1,11 +1,17 @@
+import { useState } from 'react'
+
 import { useParams } from 'react-router-dom'
 
 import { DashboardLayout } from '@/shared/components/layout/dashboard-layout'
 
 import { useGroupExpenses } from '@/features/expenses/hooks/use-group-expenses'
 
+import { AddExpenseModal } from '@/features/expenses/components/add-expense-modal'
+
 export const GroupDetailsPage = () => {
     const { groupId } = useParams()
+
+    const [isAddExpenseOpen, setIsAddExpenseOpen] = useState(false)
 
     const {
         data: expenses,
@@ -30,7 +36,12 @@ export const GroupDetailsPage = () => {
                         </p>
                     </div>
 
-                    <button className='h-12 rounded-2xl bg-blue-700 px-6 font-semibold text-white transition hover:bg-blue-800'>
+                    <button
+                        onClick={() =>
+                            setIsAddExpenseOpen(true)
+                        }
+                        className='h-12 rounded-2xl bg-blue-700 px-6 font-semibold text-white transition hover:bg-blue-800'
+                    >
                         Add Expense
                     </button>
                 </div>
@@ -57,7 +68,12 @@ export const GroupDetailsPage = () => {
                                 tracking balances
                             </p>
 
-                            <button className='mt-8 h-12 rounded-2xl bg-blue-700 px-6 font-semibold text-white transition hover:bg-blue-800'>
+                            <button
+                                onClick={() =>
+                                    setIsAddExpenseOpen(true)
+                                }
+                                className='mt-8 h-12 rounded-2xl bg-blue-700 px-6 font-semibold text-white transition hover:bg-blue-800'
+                            >
                                 Add First Expense
                             </button>
                         </div>
@@ -148,6 +164,15 @@ export const GroupDetailsPage = () => {
                         </div>
                     )}
             </div>
+            {groupId && (
+                <AddExpenseModal
+                    isOpen={isAddExpenseOpen}
+                    onClose={() =>
+                        setIsAddExpenseOpen(false)
+                    }
+                    groupId={groupId}
+                />
+            )}
         </DashboardLayout>
     )
 }
