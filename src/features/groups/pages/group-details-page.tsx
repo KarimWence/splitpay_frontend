@@ -10,6 +10,8 @@ import { AddExpenseModal } from '@/features/expenses/components/add-expense-moda
 
 import { useGroup } from '../hooks/use-groups'
 
+import { AddMemberModal } from '../components/add-member-modal'
+
 export const GroupDetailsPage = () => {
     const { groupId } = useParams()
 
@@ -26,6 +28,9 @@ export const GroupDetailsPage = () => {
     const { data: group } = useGroup(
         groupId || ''
     )
+
+    const [isAddMemberOpen, setIsAddMemberOpen] =
+        useState(false)
 
     return (
         <DashboardLayout>
@@ -51,6 +56,50 @@ export const GroupDetailsPage = () => {
                         Add Expense
                     </button>
                 </div>
+
+                {group && (
+                    <div className='rounded-3xl border border-gray-200 bg-white p-6 shadow-sm'>
+                        <div className='flex flex-col justify-between gap-6 md:flex-row md:items-center'>
+                            <div>
+                                <h2 className='text-2xl font-bold text-gray-900'>
+                                    Members
+                                </h2>
+
+                                <p className='mt-2 text-gray-500'>
+                                    {
+                                        group.members
+                                            .length
+                                    }{' '}
+                                    total members
+                                </p>
+                            </div>
+
+                            <button
+                                onClick={() =>
+                                    setIsAddMemberOpen(
+                                        true
+                                    )
+                                }
+                                className='h-12 rounded-2xl bg-gray-900 px-6 font-semibold text-white transition hover:bg-black'
+                            >
+                                Add Member
+                            </button>
+                        </div>
+
+                        <div className='mt-6 flex flex-wrap gap-3'>
+                            {group.members.map(
+                                (memberId) => (
+                                    <div
+                                        key={memberId}
+                                        className='rounded-2xl bg-gray-100 px-4 py-3 text-sm font-medium text-gray-700'
+                                    >
+                                        {memberId}
+                                    </div>
+                                )
+                            )}
+                        </div>
+                    </div>
+                )}
 
                 {isLoading && (
                     <div className='flex h-[300px] items-center justify-center rounded-3xl border border-gray-200 bg-white'>
@@ -175,6 +224,15 @@ export const GroupDetailsPage = () => {
                     isOpen={isAddExpenseOpen}
                     onClose={() =>
                         setIsAddExpenseOpen(false)
+                    }
+                    groupId={groupId}
+                />
+            )}
+            {groupId && (
+                <AddMemberModal
+                    isOpen={isAddMemberOpen}
+                    onClose={() =>
+                        setIsAddMemberOpen(false)
                     }
                     groupId={groupId}
                 />

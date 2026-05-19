@@ -25,6 +25,28 @@ export const getGroupRequest =
         return response.data
     }
 
+interface AddMemberDto {
+    groupId: string
+
+    userId: string
+}
+
+export const addMemberRequest =
+    async ({
+        groupId,
+
+        userId,
+    }: AddMemberDto) => {
+        const response = await api.post(
+            `/expenses/groups/${groupId}/members`,
+            {
+                userId,
+            }
+        )
+
+        return response.data
+    }
+
 export const createGroupRequest = async (
     data: CreateGroupDto
 ): Promise<Group> => {
