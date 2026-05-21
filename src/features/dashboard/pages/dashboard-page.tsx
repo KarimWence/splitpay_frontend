@@ -1,53 +1,72 @@
 import { DashboardLayout } from '@/shared/components/layout/dashboard-layout'
+
 import { BalanceSummaryCard } from '../components/balance-summary-card'
+
 import { CreateGroupCard } from '../components/create-group-card'
+
 import { GroupCard } from '../components/group-card'
 
+import { useGroups } from '@/features/groups/hooks/use-groups'
+
+import { useDashboardSummary } from '../hooks/use-dashboard-summary'
+
 export const DashboardPage = () => {
+    const { data: groups = [] } =
+        useGroups()
 
-  return (
-    <DashboardLayout>
-      <div className='space-y-10'>
-        <BalanceSummaryCard />
+    const summary =
+        useDashboardSummary()
 
-        <section>
-          <div className='mb-8 flex items-center gap-3'>
-            <div className='h-3 w-3 rounded-full bg-emerald-500' />
+    return (
+        <DashboardLayout>
+            <div className='space-y-8'>
+                <BalanceSummaryCard
+                    netBalance={
+                        summary.netBalance
+                    }
+                    totalOwed={
+                        summary.totalOwed
+                    }
+                    totalOwes={
+                        summary.totalOwes
+                    }
+                />
 
-            <p className='text-sm font-semibold tracking-[0.2em] text-gray-500 uppercase'>
-              Live Optimization Active
-            </p>
-          </div>
+                <section>
+                    <div className='mb-6 flex items-center gap-3'>
+                        <div className='h-2.5 w-2.5 rounded-full bg-emerald-500' />
 
-          <div className='grid grid-cols-1 lg:grid-cols-3 gap-8'>
-            <GroupCard
-              title='Trip to Spain'
-              members={4}
-              category='Travel'
-              amount='$420.00'
-              type='owed'
-            />
+                        <p className='text-xs font-semibold uppercase tracking-[0.2em] text-gray-500'>
+                            Your Active Groups
+                        </p>
+                    </div>
 
-            <GroupCard
-              title='Roomies'
-              members={3}
-              category='Housing'
-              amount='$125.50'
-              type='owe'
-            />
+                    <div className='grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3'>
+                        {groups.map(
+                            (group) => (
+                                <GroupCard
+                                    key={
+                                        group._id
+                                    }
+                                    id={
+                                        group._id
+                                    }
+                                    title={
+                                        group.name
+                                    }
+                                    members={
+                                        group
+                                            .members
+                                            .length
+                                    }
+                                />
+                            )
+                        )}
 
-            <GroupCard
-              title='Dinner Crew'
-              members={6}
-              category='Food'
-              amount='$85.00'
-              type='owed'
-            />
-
-            <CreateGroupCard />
-          </div>
-        </section>
-      </div>
-    </DashboardLayout>
-  )
+                        <CreateGroupCard />
+                    </div>
+                </section>
+            </div>
+        </DashboardLayout>
+    )
 }
