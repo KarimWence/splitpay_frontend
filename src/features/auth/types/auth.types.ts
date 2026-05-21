@@ -24,3 +24,10 @@ export interface RegisterDto {
     password: string;
 }
 
+export interface PublicUser {
+    id: string
+    email: string
+    name: string
+    lastName: string
+    role: string
+}

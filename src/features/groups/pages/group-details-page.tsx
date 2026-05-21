@@ -14,6 +14,10 @@ import { AddMemberModal } from '../components/add-member-modal'
 
 import { useGroupBalances } from '@/features/expenses/hooks/use-group-expenses'
 
+import { MemberItem } from '../components/member.item'
+
+import { BalanceItem } from '../components/balance-item'
+
 export const GroupDetailsPage = () => {
     const { groupId } = useParams()
 
@@ -96,12 +100,10 @@ export const GroupDetailsPage = () => {
                         <div className='mt-6 flex flex-wrap gap-3'>
                             {group.members.map(
                                 (memberId) => (
-                                    <div
+                                    <MemberItem
                                         key={memberId}
-                                        className='rounded-2xl bg-gray-100 px-4 py-3 text-sm font-medium text-gray-700'
-                                    >
-                                        {memberId}
-                                    </div>
+                                        userId={memberId}
+                                    />
                                 )
                             )}
                         </div>
@@ -130,44 +132,11 @@ export const GroupDetailsPage = () => {
                                     userId,
                                     balance,
                                 ]) => (
-                                    <div
+                                    <BalanceItem
                                         key={userId}
-                                        className='flex items-center justify-between rounded-2xl bg-gray-50 px-5 py-4'
-                                    >
-                                        <div>
-                                            <p className='font-medium text-gray-900'>
-                                                {userId}
-                                            </p>
-
-                                            <p className='mt-1 text-sm text-gray-500'>
-                                                {balance >
-                                                    0
-                                                    ? 'Gets back'
-                                                    : balance <
-                                                        0
-                                                        ? 'Owes'
-                                                        : 'Settled'}
-                                            </p>
-                                        </div>
-
-                                        <p
-                                            className={`text-xl font-bold ${balance >
-                                                    0
-                                                    ? 'text-green-600'
-                                                    : balance <
-                                                        0
-                                                        ? 'text-red-600'
-                                                        : 'text-gray-500'
-                                                }`}
-                                        >
-                                            $
-                                            {Math.abs(
-                                                balance
-                                            ).toFixed(
-                                                2
-                                            )}
-                                        </p>
-                                    </div>
+                                        userId={userId}
+                                        balance={balance}
+                                    />
                                 )
                             )}
                         </div>
