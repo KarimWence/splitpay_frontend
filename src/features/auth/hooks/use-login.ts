@@ -12,12 +12,20 @@ export const useLogin = () => {
     return useMutation({
         mutationFn: loginRequest,
         onSuccess: (data) => {
+            localStorage.removeItem(
+                'splitpay-auth'
+            )
+
             setAuth({
                 accessToken: data.token,
                 user: data.user,
             })
-            toast.success('Login successful!');
-            navigate('/dashboard');
+
+            toast.success(
+                'Login successful!'
+            )
+
+            navigate('/dashboard')
         },
         onError: () => {
             toast.error('Invalid credentials.')

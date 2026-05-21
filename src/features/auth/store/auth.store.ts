@@ -30,12 +30,17 @@ export const useAuthStore =
             isAuthenticated: true,
           }),
 
-        logout: () =>
+        logout: () => {
+          localStorage.removeItem(
+            'splitpay-auth'
+          )
+
           set({
             user: null,
             accessToken: null,
             isAuthenticated: false,
-          }),
+          })
+        },
       }),
 
       {

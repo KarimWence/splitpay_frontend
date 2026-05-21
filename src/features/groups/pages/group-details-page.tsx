@@ -18,6 +18,10 @@ import { MemberItem } from '../components/member.item'
 
 import { BalanceItem } from '../components/balance-item'
 
+import { useSettlements } from '@/features/expenses/hooks/use-settlements'
+
+import { SettlementItem } from '@/features/expenses/components/settlement-item'
+
 export const GroupDetailsPage = () => {
     const { groupId } = useParams()
 
@@ -43,6 +47,11 @@ export const GroupDetailsPage = () => {
             groupId || ''
         )
 
+    const {
+        data: settlements,
+    } = useSettlements(
+        groupId || ''
+    )
     return (
         <DashboardLayout>
             <div className='space-y-10'>
@@ -142,6 +151,52 @@ export const GroupDetailsPage = () => {
                         </div>
                     </div>
                 )}
+
+                {settlements &&
+                    settlements.length >
+                    0 && (
+                        <div className='rounded-3xl border border-gray-200 bg-white p-6 shadow-sm'>
+                            <div>
+                                <h2 className='text-2xl font-bold text-gray-900'>
+                                    Suggested
+                                    Settlements
+                                </h2>
+
+                                <p className='mt-2 text-gray-500'>
+                                    Simplified debt
+                                    resolution
+                                </p>
+                            </div>
+
+                            <div className='mt-6 space-y-3'>
+                                {settlements.map(
+                                    (
+                                        settlement,
+                                        index
+                                    ) => (
+                                        <SettlementItem
+                                            key={
+                                                index
+                                            }
+                                            groupId={
+                                                groupId ||
+                                                ''
+                                            }
+                                            from={
+                                                settlement.from
+                                            }
+                                            to={
+                                                settlement.to
+                                            }
+                                            amount={
+                                                settlement.amount
+                                            }
+                                        />
+                                    )
+                                )}
+                            </div>
+                        </div>
+                    )}
 
                 {isLoading && (
                     <div className='flex h-[300px] items-center justify-center rounded-3xl border border-gray-200 bg-white'>
