@@ -28,13 +28,6 @@ export const useLogin = () => {
                 user: data.user,
             })
 
-            const bootstrapData =
-                await bootstrapRequest()
-
-            await saveBootstrapData(
-                bootstrapData
-            )
-
             try {
                 const bootstrapData =
                     await bootstrapRequest()
