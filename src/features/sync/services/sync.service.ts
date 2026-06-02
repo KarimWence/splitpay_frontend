@@ -22,25 +22,6 @@ export const saveBootstrapData =
     async (
         data: any
     ) => {
-        console.log(
-            'BOOTSTRAP DATA',
-            data
-        )
-
-        console.log(
-            'GROUPS',
-            data.groups
-        )
-
-        console.log(
-            'EXPENSES',
-            data.expenses
-        )
-
-        console.log(
-            'ACTIVITIES',
-            data.activities
-        )
 
         console.log(
             'SETTLEMENTS',

@@ -9,12 +9,8 @@ import { GroupCard } from '../components/group-card'
 import { useGroups } from '@/features/groups/hooks/use-groups'
 
 import { useDashboardSummary } from '../hooks/use-dashboard-summary'
-import { useBootstrap } from '@/features/sync/hooks/use-bootstrap'
 
 export const DashboardPage = () => {
-    const bootstrapMutation =
-        useBootstrap()
-
     const { data: groups = [] } =
         useGroups()
 
@@ -43,14 +39,6 @@ export const DashboardPage = () => {
                         <p className='text-xs font-semibold uppercase tracking-[0.2em] text-gray-500'>
                             Your Active Groups
                         </p>
-
-                        <button
-                            onClick={() =>
-                                bootstrapMutation.mutate()
-                            }
-                        >
-                            Bootstrap Test
-                        </button>
                     </div>
 
                     <div className='grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3'>
