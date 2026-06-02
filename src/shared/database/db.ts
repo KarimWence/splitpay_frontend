@@ -52,6 +52,78 @@ export interface SettlementEntity {
     deletedAt?: string | null
 }
 
+export interface ActivityEntity {
+    id: string
+
+    groupId: string
+
+    userId: string
+
+    type: string
+
+    message: string
+
+    metadata?: string
+
+    createdAt: string
+
+    updatedAt: string
+
+    deletedAt?: string | null
+}
+
+export interface NotificationEntity {
+    id: string
+
+    userId: string
+
+    type: string
+
+    title: string
+
+    message: string
+
+    read: number
+
+    metadata?: string
+
+    createdAt: string
+
+    updatedAt: string
+
+    deletedAt?: string | null
+}
+
+export interface InvitationEntity {
+    id: string
+
+    groupId: string
+
+    invitedBy: string
+
+    invitedUserId: string
+
+    status: string
+
+    expiresAt: string
+
+    createdAt: string
+
+    updatedAt: string
+}
+
+export interface PendingOperationEntity {
+    id: string
+
+    type: string
+
+    payload: string
+
+    createdAt: string
+
+    status: string
+}
+
 export interface SyncStateEntity {
     key: string
 
@@ -64,6 +136,14 @@ export class SplitPayDatabase extends Dexie {
     expenses!: Table<ExpenseEntity>
 
     settlements!: Table<SettlementEntity>
+
+    activities!: Table<ActivityEntity>
+
+    notifications!: Table<NotificationEntity>
+
+    invitations!: Table<InvitationEntity>
+
+    pendingOperations!: Table<PendingOperationEntity>
 
     syncState!: Table<SyncStateEntity>
 
@@ -78,7 +158,19 @@ export class SplitPayDatabase extends Dexie {
                 'id,groupId,paidBy',
 
             settlements:
-                'id,groupId',
+                'id,groupId,fromUserId,toUserId',
+
+            activities:
+                'id,groupId,userId,type',
+
+            notifications:
+                'id,userId,read',
+
+            invitations:
+                'id,groupId,invitedUserId,status',
+
+            pendingOperations:
+                'id,type,status',
 
             syncState:
                 'key',
