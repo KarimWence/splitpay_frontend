@@ -12,6 +12,13 @@ export const ExpenseRepository = {
             .equals(groupId)
             .toArray(),
 
+    create: (
+        expense: any
+    ) =>
+        db.expenses.put(
+            expense
+        ),
+
     upsertMany: async (
         expenses: any[]
     ) => {

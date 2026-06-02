@@ -9,27 +9,30 @@ export const useSync = () => {
         useQueryClient()
 
     useEffect(() => {
-        const runSync =
-            async () => {
-                try {
-                    await syncChanges()
-
-                    await queryClient.invalidateQueries({
-                        queryKey: ['groups'],
-                    })
-
-                    await queryClient.invalidateQueries({
-                        queryKey: [
-                            'group-expenses',
-                        ],
-                    })
-                } catch (error) {
-                    console.error(
-                        'Sync failed',
-                        error
-                    )
-                }
+        const runSync = async () => {
+            if (!navigator.onLine) {
+                return
             }
+
+            try {
+                await syncChanges()
+
+                await queryClient.invalidateQueries({
+                    queryKey: ['groups'],
+                })
+
+                await queryClient.invalidateQueries({
+                    queryKey: [
+                        'group-expenses',
+                    ],
+                })
+            } catch (error) {
+                console.error(
+                    'Sync failed',
+                    error
+                )
+            }
+        }
 
         runSync()
 

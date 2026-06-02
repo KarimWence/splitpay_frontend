@@ -4,29 +4,34 @@ import { useQueryClient } from '@tanstack/react-query'
 
 import { toast } from 'sonner'
 
-import { createExpenseRequest } from '../api/expenses.api'
+import { createExpenseOfflineFirst } from '../services/create-expense.service'
 
 export const useCreateExpense = (
     groupId: string
 ) => {
-    const queryClient = useQueryClient()
+    const queryClient =
+        useQueryClient()
 
     return useMutation({
-        mutationFn: createExpenseRequest,
+        mutationFn:
+            createExpenseOfflineFirst,
 
-        onSuccess: () => {
+        networkMode:
+            'always',
+
+        onSuccess: async () => {
             toast.success(
                 'Expense added successfully'
             )
 
-            queryClient.invalidateQueries({
+            await queryClient.refetchQueries({
                 queryKey: [
                     'group-expenses',
                     groupId,
                 ],
             })
 
-            queryClient.invalidateQueries({
+            await queryClient.refetchQueries({
                 queryKey: [
                     'group-balances',
                     groupId,
