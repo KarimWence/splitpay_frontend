@@ -16,8 +16,36 @@ export const saveBootstrapData =
     async (
         data: any
     ) => {
-        await GroupRepository.upsertMany(
+        console.log(
+            'BOOTSTRAP DATA',
+            data
+        )
+
+        console.log(
+            'GROUPS',
             data.groups
+        )
+
+        await GroupRepository.upsertMany(
+            data.groups.map(
+                (group: any) => ({
+                    id: group._id,
+
+                    name: group.name,
+
+                    ownerId:
+                        group.ownerId,
+
+                    createdAt:
+                        group.createdAt,
+
+                    updatedAt:
+                        group.updatedAt,
+
+                    deletedAt:
+                        group.deletedAt,
+                })
+            )
         )
 
         await ExpenseRepository.upsertMany(
