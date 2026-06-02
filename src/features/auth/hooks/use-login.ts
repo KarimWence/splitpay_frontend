@@ -19,9 +19,6 @@ export const useLogin = () => {
         mutationFn: loginRequest,
 
         onSuccess: async (data) => {
-            localStorage.removeItem(
-                'splitpay-auth'
-            )
 
             setAuth({
                 accessToken: data.token,

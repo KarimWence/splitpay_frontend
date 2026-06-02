@@ -9,3 +9,14 @@ export const bootstrapRequest =
 
         return response.data
     }
+
+export const changesRequest = async (
+    since: string
+) => {
+    const response =
+        await api.get(
+            `/expenses/sync/changes?since=${since}`
+        )
+
+    return response.data
+}

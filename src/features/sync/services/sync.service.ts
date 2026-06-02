@@ -18,15 +18,12 @@ import { mapExpenseToEntity } from '../mappers/expense.mapper'
 
 import { mapActivityToEntity } from '../mappers/activity.mapper'
 
+import { changesRequest } from '../api/sync.api'
+
 export const saveBootstrapData =
     async (
         data: any
     ) => {
-
-        console.log(
-            'SETTLEMENTS',
-            data.settlements
-        )
 
         await GroupRepository.upsertMany(
             data.groups.map(
@@ -60,5 +57,62 @@ export const saveBootstrapData =
 
         await SyncStateRepository.setLastSync(
             data.serverTime
+        )
+    }
+
+const applyChanges = async (
+    data: any
+) => {
+    if (
+        data.groups?.length
+    ) {
+        await GroupRepository.upsertMany(
+            data.groups.map(
+                mapGroupToEntity
+            )
+        )
+    }
+
+    if (
+        data.expenses?.length
+    ) {
+        await ExpenseRepository.upsertMany(
+            data.expenses.map(
+                mapExpenseToEntity
+            )
+        )
+    }
+
+    if (
+        data.activities?.length
+    ) {
+        await ActivityRepository.upsertMany(
+            data.activities.map(
+                mapActivityToEntity
+            )
+        )
+    }
+}
+
+export const syncChanges =
+    async () => {
+        const lastSync =
+            await SyncStateRepository.getLastSync()
+
+        if (!lastSync) {
+            return
+        }
+
+        const changes =
+            await changesRequest(
+                lastSync
+            )
+
+        await applyChanges(
+            changes
+        )
+
+        await SyncStateRepository.setLastSync(
+            changes.serverTime
         )
     }

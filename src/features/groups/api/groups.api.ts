@@ -50,10 +50,30 @@ export const addMemberRequest =
 export const createGroupRequest = async (
     data: CreateGroupDto
 ): Promise<Group> => {
-    const response = await api.post(
-        '/expenses/groups',
-        data
-    )
+    try {
+        const response =
+            await api.post(
+                '/expenses/groups',
+                data
+            )
 
-    return response.data
+        console.log(
+            'CREATE GROUP SUCCESS',
+            response.data
+        )
+
+        return response.data
+    } catch (error: any) {
+        console.log(
+            'CREATE GROUP ERROR',
+            error.response?.status
+        )
+
+        console.log(
+            'CREATE GROUP DATA',
+            error.response?.data
+        )
+
+        throw error
+    }
 }
