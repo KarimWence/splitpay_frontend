@@ -6,6 +6,8 @@ import type { Balance } from '../types/balance.types'
 
 import type { SuggestedSettlement } from '../types/settlement.types'
 
+import { v4 as uuidv4 } from 'uuid'
+
 export const getGroupExpensesRequest =
     async (
         groupId: string
@@ -23,6 +25,8 @@ interface CreateExpenseDto {
     description: string
 
     amount: number
+
+    requestId?: string
 }
 
 export const createExpenseRequest =
@@ -31,7 +35,13 @@ export const createExpenseRequest =
     ): Promise<void> => {
         await api.post(
             '/expenses/expense',
-            data
+            {
+                ...data,
+
+                requestId:
+                    data.requestId ??
+                    uuidv4(),
+            }
         )
     }
 

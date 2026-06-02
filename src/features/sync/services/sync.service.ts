@@ -11,6 +11,7 @@ import { NotificationRepository } from '@/shared/database/repositories/notificat
 import { InvitationRepository } from '@/shared/database/repositories/invitation.repository'
 
 import { SyncStateRepository } from '@/shared/database/repositories/sync-state.repository'
+import { mapGroupToEntity } from '../mappers/group.mappers'
 
 export const saveBootstrapData =
     async (
@@ -28,23 +29,7 @@ export const saveBootstrapData =
 
         await GroupRepository.upsertMany(
             data.groups.map(
-                (group: any) => ({
-                    id: group._id,
-
-                    name: group.name,
-
-                    ownerId:
-                        group.ownerId,
-
-                    createdAt:
-                        group.createdAt,
-
-                    updatedAt:
-                        group.updatedAt,
-
-                    deletedAt:
-                        group.deletedAt,
-                })
+                mapGroupToEntity
             )
         )
 
