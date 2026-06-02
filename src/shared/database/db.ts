@@ -27,6 +27,10 @@ export interface ExpenseEntity {
 
     amount: number
 
+    requestId?: string
+
+    splits?: string
+
     createdAt: string
 
     updatedAt: string

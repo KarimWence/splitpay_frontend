@@ -11,7 +11,12 @@ import { NotificationRepository } from '@/shared/database/repositories/notificat
 import { InvitationRepository } from '@/shared/database/repositories/invitation.repository'
 
 import { SyncStateRepository } from '@/shared/database/repositories/sync-state.repository'
+
 import { mapGroupToEntity } from '../mappers/group.mappers'
+
+import { mapExpenseToEntity } from '../mappers/expense.mapper'
+
+import { mapActivityToEntity } from '../mappers/activity.mapper'
 
 export const saveBootstrapData =
     async (
@@ -27,6 +32,21 @@ export const saveBootstrapData =
             data.groups
         )
 
+        console.log(
+            'EXPENSES',
+            data.expenses
+        )
+
+        console.log(
+            'ACTIVITIES',
+            data.activities
+        )
+
+        console.log(
+            'SETTLEMENTS',
+            data.settlements
+        )
+
         await GroupRepository.upsertMany(
             data.groups.map(
                 mapGroupToEntity
@@ -34,7 +54,9 @@ export const saveBootstrapData =
         )
 
         await ExpenseRepository.upsertMany(
-            data.expenses
+            data.expenses.map(
+                mapExpenseToEntity
+            )
         )
 
         await SettlementRepository.upsertMany(
@@ -42,7 +64,9 @@ export const saveBootstrapData =
         )
 
         await ActivityRepository.upsertMany(
-            data.activities
+            data.activities.map(
+                mapActivityToEntity
+            )
         )
 
         await NotificationRepository.upsertMany(
