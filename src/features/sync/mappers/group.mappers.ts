@@ -7,6 +7,10 @@ export const mapGroupToEntity = (
 
     ownerId: group.ownerId,
 
+    members: JSON.stringify(
+        group.members ?? []
+    ),
+
     createdAt:
         group.createdAt,
 

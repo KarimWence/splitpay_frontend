@@ -9,6 +9,8 @@ export interface GroupEntity {
 
     ownerId: string
 
+    members: string
+
     createdAt: string
 
     updatedAt: string
