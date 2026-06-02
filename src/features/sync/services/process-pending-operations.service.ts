@@ -7,16 +7,7 @@ export const processPendingOperations =
         const operations =
             await PendingOperationRepository.getPending()
 
-        console.log(
-            'PENDING OPS',
-            operations.length
-        )
-
         for (const operation of operations) {
-            console.log(
-                'PROCESSING',
-                operation.id
-            )
 
             try {
                 switch (
@@ -28,33 +19,11 @@ export const processPendingOperations =
                                 operation.payload
                             )
 
-                        console.log(
-                            'SENDING',
-                            payload
-                        )
-
-                        console.log(
-                            'BEFORE CREATE EXPENSE REQUEST'
-                        )
-
                         await createExpenseRequest(
                             payload
                         )
 
-                        console.log(
-                            'AFTER CREATE EXPENSE REQUEST'
-                        )
-
-                        console.log(
-                            'SENT'
-                        )
-
                         await PendingOperationRepository.remove(
-                            operation.id
-                        )
-
-                        console.log(
-                            'REMOVED',
                             operation.id
                         )
 

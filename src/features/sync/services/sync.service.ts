@@ -75,9 +75,18 @@ const applyChanges = async (
         )
     }
 
-    if (
-        data.expenses?.length
-    ) {
+    if (data.expenses?.length) {
+
+        for (const expense of data.expenses) {
+
+            if (expense.requestId) {
+
+                await ExpenseRepository.deleteByRequestId(
+                    expense.requestId
+                )
+            }
+        }
+
         await ExpenseRepository.upsertMany(
             data.expenses.map(
                 mapExpenseToEntity
@@ -111,6 +120,11 @@ export const syncChanges =
             await changesRequest(
                 lastSync
             )
+
+        console.log(
+            'CHANGES',
+            changes
+        )
 
         await applyChanges(
             changes

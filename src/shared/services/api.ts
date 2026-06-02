@@ -14,20 +14,10 @@ api.interceptors.request.use(
             useAuthStore.getState()
                 .accessToken
 
-        console.log(
-            'TOKEN FROM STORE',
-            token
-        )
-
         if (token) {
             config.headers.Authorization =
                 `Bearer ${token}`
         }
-
-        console.log(
-            'HEADERS',
-            config.headers
-        )
 
         return config
     }

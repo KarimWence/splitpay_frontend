@@ -33,11 +33,6 @@ export const createExpenseRequest =
     async (
         data: CreateExpenseDto
     ): Promise<void> => {
-
-        console.log(
-            'INSIDE CREATE EXPENSE REQUEST'
-        )
-
         try {
             const response =
                 await api.post(
@@ -52,17 +47,7 @@ export const createExpenseRequest =
                         timeout: 5000,
                     }
                 )
-
-            console.log(
-                'POST STATUS',
-                response.status
-            )
         } catch (error) {
-            console.error(
-                'POST ERROR',
-                error
-            )
-
             throw error
         }
     }

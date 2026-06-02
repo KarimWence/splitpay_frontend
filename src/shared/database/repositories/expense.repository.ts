@@ -27,6 +27,14 @@ export const ExpenseRepository = {
         )
     },
 
+    deleteByRequestId: (
+        requestId: string
+    ) =>
+        db.expenses
+            .where('requestId')
+            .equals(requestId)
+            .delete(),
+
     clear: () =>
         db.expenses.clear(),
 }
