@@ -20,6 +20,8 @@ import { mapActivityToEntity } from '../mappers/activity.mapper'
 
 import { changesRequest } from '../api/sync.api'
 
+import { processPendingOperations } from './process-pending-operations.service'
+
 export const saveBootstrapData =
     async (
         data: any
@@ -96,6 +98,8 @@ const applyChanges = async (
 
 export const syncChanges =
     async () => {
+        await processPendingOperations()
+
         const lastSync =
             await SyncStateRepository.getLastSync()
 
@@ -111,9 +115,6 @@ export const syncChanges =
         await applyChanges(
             changes
         )
-
-        const groups =
-            await GroupRepository.getAll()
 
         await SyncStateRepository.setLastSync(
             changes.serverTime

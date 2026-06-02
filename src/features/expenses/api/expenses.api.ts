@@ -33,16 +33,38 @@ export const createExpenseRequest =
     async (
         data: CreateExpenseDto
     ): Promise<void> => {
-        await api.post(
-            '/expenses/expense',
-            {
-                ...data,
 
-                requestId:
-                    data.requestId ??
-                    uuidv4(),
-            }
+        console.log(
+            'INSIDE CREATE EXPENSE REQUEST'
         )
+
+        try {
+            const response =
+                await api.post(
+                    '/expenses/expense',
+                    {
+                        ...data,
+                        requestId:
+                            data.requestId ??
+                            uuidv4(),
+                    },
+                    {
+                        timeout: 5000,
+                    }
+                )
+
+            console.log(
+                'POST STATUS',
+                response.status
+            )
+        } catch (error) {
+            console.error(
+                'POST ERROR',
+                error
+            )
+
+            throw error
+        }
     }
 
 export const getGroupBalancesRequest =
