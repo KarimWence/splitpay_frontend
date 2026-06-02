@@ -1,9 +1,11 @@
-// src/App.tsx
-
 import { AppRouter } from './app/router'
 
+import { useSync } from '@/features/sync/hooks/use-sync'
+
 function App() {
-  return <AppRouter />
+    useSync()
+
+    return <AppRouter />
 }
 
 export default App

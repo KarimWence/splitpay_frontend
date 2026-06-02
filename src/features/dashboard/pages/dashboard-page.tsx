@@ -12,7 +12,12 @@ import { useDashboardSummary } from '../hooks/use-dashboard-summary'
 
 import { syncChanges } from '@/features/sync/services/sync.service'
 
+import { useQueryClient } from '@tanstack/react-query'
+
 export const DashboardPage = () => {
+    const queryClient =
+        useQueryClient()
+    
     const { data: groups = [] } =
         useGroups()
 
@@ -41,28 +46,6 @@ export const DashboardPage = () => {
                         <p className='text-xs font-semibold uppercase tracking-[0.2em] text-gray-500'>
                             Your Active Groups
                         </p>
-
-                        <div className='flex gap-3'>
-                            <button
-                                onClick={async () => {
-                                    try {
-                                        await syncChanges()
-
-                                        console.log(
-                                            'Sync completed'
-                                        )
-                                    } catch (error) {
-                                        console.error(
-                                            'Sync failed',
-                                            error
-                                        )
-                                    }
-                                }}
-                                className='rounded-xl bg-purple-600 px-4 py-2 text-white'
-                            >
-                                Sync Changes Test
-                            </button>
-                        </div>
                     </div>
 
                     <div className='grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3'>

@@ -108,11 +108,29 @@ export const syncChanges =
                 lastSync
             )
 
+        console.log(
+            'CHANGES',
+            changes
+        )
+
         await applyChanges(
             changes
         )
 
+        const groups =
+            await GroupRepository.getAll()
+
+        console.log(
+            'GROUPS IN DB',
+            groups
+        )
+
         await SyncStateRepository.setLastSync(
             changes.serverTime
+        )
+
+        console.log(
+            'RUNNING SYNC',
+            lastSync
         )
     }
