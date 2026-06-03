@@ -25,6 +25,9 @@ import { SettlementItem } from '@/features/expenses/components/settlement-item'
 import { ExpenseCard } from '@/features/expenses/components/expense-card'
 import { useJoinGroup } from '@/features/socket/use-join-group'
 
+import { useGroupActivities } from '@/features/activity/hooks/use-group-activities'
+import { ActivitySection } from '@/features/activity/components/activity-section'
+
 export const GroupDetailsPage = () => {
     const { groupId } = useParams()
     useJoinGroup(groupId)
@@ -54,6 +57,12 @@ export const GroupDetailsPage = () => {
     const {
         data: settlements,
     } = useSettlements(
+        groupId || ''
+    )
+
+    const {
+        data: activities,
+    } = useGroupActivities(
         groupId || ''
     )
     return (
@@ -201,7 +210,11 @@ export const GroupDetailsPage = () => {
                             </div>
                         </div>
                     )}
-
+                <ActivitySection
+                    activities={
+                        activities
+                    }
+                />
                 {isLoading && (
                     <div className='flex h-[300px] items-center justify-center rounded-3xl border border-gray-200 bg-white'>
                         <p className='text-lg font-medium text-gray-500'>
