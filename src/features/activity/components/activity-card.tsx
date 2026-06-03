@@ -71,17 +71,11 @@ export const ActivityCard = ({
                     }
                 </p>
 
-                {'amount' in
-                    activity.metadata && (
-                        <p className='mt-2 text-sm font-semibold text-blue-700'>
-                            Amount: $
-                            {
-                                activity
-                                    .metadata
-                                    .amount
-                            }
-                        </p>
-                    )}
+                {activity.metadata?.amount && (
+                    <p className='mt-2 text-sm font-semibold text-blue-700'>
+                        Amount: ${activity.metadata.amount}
+                    </p>
+                )}
             </div>
         </div>
     )
