@@ -35,16 +35,34 @@ export const useRealtimeEvents = () => {
                     ],
                 })
             }
+        const onActivityCreated =
+            async () => {
+
+                await queryClient.invalidateQueries({
+                    queryKey: [
+                        'group-activities',
+                    ],
+                })
+            }
 
         socket.on(
             SOCKET_EVENTS.EXPENSE_CREATED,
             onExpenseCreated
         )
 
+        socket.on(
+            SOCKET_EVENTS.ACTIVITY_CREATED,
+            onActivityCreated
+        )
+
         return () => {
             socket.off(
                 SOCKET_EVENTS.EXPENSE_CREATED,
                 onExpenseCreated
+            )
+            socket.off(
+                SOCKET_EVENTS.ACTIVITY_CREATED,
+                onActivityCreated
             )
         }
     }, [queryClient])

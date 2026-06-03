@@ -41,7 +41,7 @@ export const ActivitySection = ({
                 </h2>
 
                 <p className='mt-2 text-gray-500'>
-                    Stay updated with group changes
+                    Latest actions inside this group
                 </p>
             </div>
 
