@@ -38,8 +38,8 @@ export const GroupCard = ({
                 {title}
             </h3>
 
-            <p className='mt-2 text-sm text-gray-500'>
-                {members} members
+            <p className='mt-3 text-xs font-medium text-blue-600'>
+                {members} member{members > 1 && 's'}
             </p>
 
             <div className='mt-6 flex items-center justify-between border-t border-gray-100 pt-5'>
@@ -67,7 +67,7 @@ export const GroupCard = ({
                             `/groups/${id}`
                         )
                     }
-                    className='flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-gray-50 transition hover:bg-blue-50'
+                    className='flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-blue-50 transition hover:bg-blue-100' title='Open group details'
                 >
                     <ArrowRight
                         size={18}
