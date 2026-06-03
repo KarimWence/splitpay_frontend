@@ -107,7 +107,9 @@ const applyChanges = async (
 
 export const syncChanges =
     async () => {
-        await processPendingOperations()
+
+        const processed =
+            await processPendingOperations()
 
         const lastSync =
             await SyncStateRepository.getLastSync()
@@ -121,11 +123,6 @@ export const syncChanges =
                 lastSync
             )
 
-        console.log(
-            'CHANGES',
-            changes
-        )
-
         await applyChanges(
             changes
         )
@@ -133,4 +130,6 @@ export const syncChanges =
         await SyncStateRepository.setLastSync(
             changes.serverTime
         )
+
+        return processed
     }

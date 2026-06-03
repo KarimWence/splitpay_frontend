@@ -161,7 +161,7 @@ export class SplitPayDatabase extends Dexie {
                 'id,name,ownerId',
 
             expenses:
-                'id,groupId,paidBy',
+                'id,groupId,paidBy,requestId',
 
             settlements:
                 'id,groupId,fromUserId,toUserId',

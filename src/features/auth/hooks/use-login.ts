@@ -29,8 +29,17 @@ export const useLogin = () => {
                 const bootstrapData =
                     await bootstrapRequest()
 
+                console.log(
+                    'BOOTSTRAP RESPONSE',
+                    bootstrapData
+                )
+
                 await saveBootstrapData(
                     bootstrapData
+                )
+
+                console.log(
+                    'BOOTSTRAP SAVED'
                 )
             } catch (error) {
                 console.error(

@@ -6,6 +6,8 @@ import { toast } from 'sonner'
 
 import { createExpenseOfflineFirst } from '../services/create-expense.service'
 
+import { ExpenseRepository } from '@/shared/database/repositories/expense.repository'
+
 export const useCreateExpense = (
     groupId: string
 ) => {
@@ -20,18 +22,52 @@ export const useCreateExpense = (
             'always',
 
         onSuccess: async () => {
+
             toast.success(
                 'Expense added successfully'
             )
 
-            await queryClient.refetchQueries({
-                queryKey: [
+            const expenses =
+                await ExpenseRepository.getByGroupId(
+                    groupId
+                )
+
+            queryClient.setQueryData(
+                [
                     'group-expenses',
                     groupId,
                 ],
-            })
+                expenses.map(
+                    (expense) => ({
+                        _id: expense.id,
 
-            await queryClient.refetchQueries({
+                        groupId:
+                            expense.groupId,
+
+                        paidBy:
+                            expense.paidBy,
+
+                        description:
+                            expense.description,
+
+                        amount:
+                            expense.amount,
+
+                        splits: JSON.parse(
+                            expense.splits ??
+                            '[]'
+                        ),
+
+                        createdAt:
+                            expense.createdAt,
+
+                        updatedAt:
+                            expense.updatedAt,
+                    })
+                )
+            )
+
+            queryClient.invalidateQueries({
                 queryKey: [
                     'group-balances',
                     groupId,

@@ -20,7 +20,6 @@ export const useGroupExpenses = (
                 await ExpenseRepository.getByGroupId(
                     groupId
                 )
-
             return expenses.map(
                 (expense) => ({
                     _id:
@@ -41,7 +40,7 @@ export const useGroupExpenses = (
                     splits:
                         JSON.parse(
                             expense.splits ??
-                                '[]'
+                            '[]'
                         ),
 
                     createdAt:
@@ -54,6 +53,8 @@ export const useGroupExpenses = (
         },
 
         enabled: !!groupId,
+
+        networkMode: 'always',
     })
 }
 

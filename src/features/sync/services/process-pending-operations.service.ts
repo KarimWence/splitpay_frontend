@@ -7,6 +7,8 @@ export const processPendingOperations =
         const operations =
             await PendingOperationRepository.getPending()
 
+        let processed = 0
+
         for (const operation of operations) {
 
             try {
@@ -27,10 +29,32 @@ export const processPendingOperations =
                             operation.id
                         )
 
+
+                        processed++
                         break
                     }
                 }
             } catch (error: any) {
+
+                const errorMessage =
+                    error?.response?.data?.error
+
+                if (
+                    typeof errorMessage ===
+                    'string' &&
+                    errorMessage.includes(
+                        'duplicate key'
+                    )
+                ) {
+                    await PendingOperationRepository.remove(
+                        operation.id
+                    )
+
+                    processed++
+
+                    continue
+                }
+
                 console.error(
                     'FAILED RESPONSE',
                     error?.response?.data
@@ -44,4 +68,5 @@ export const processPendingOperations =
                 console.error(error)
             }
         }
+        return processed
     }

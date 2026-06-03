@@ -4,6 +4,8 @@ import { useQueryClient } from '@tanstack/react-query'
 
 import { syncChanges } from '../services/sync.service'
 
+import { toast } from 'sonner'
+
 export const useSync = () => {
     const queryClient =
         useQueryClient()
@@ -15,7 +17,17 @@ export const useSync = () => {
             }
 
             try {
-                await syncChanges()
+                const processed =
+                    await syncChanges()
+
+                if (processed > 0) {
+                    toast.success(
+                        `${processed} operation${processed > 1
+                            ? 's'
+                            : ''
+                        } synchronized`
+                    )
+                }
 
                 await queryClient.invalidateQueries({
                     queryKey: ['groups'],

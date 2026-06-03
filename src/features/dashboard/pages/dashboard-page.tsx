@@ -13,11 +13,12 @@ import { useDashboardSummary } from '../hooks/use-dashboard-summary'
 import { syncChanges } from '@/features/sync/services/sync.service'
 
 import { useQueryClient } from '@tanstack/react-query'
+import { SyncStatusCard } from '@/features/sync/components/sync-status-card'
 
 export const DashboardPage = () => {
     const queryClient =
         useQueryClient()
-    
+
     const { data: groups = [] } =
         useGroups()
 
@@ -48,27 +49,19 @@ export const DashboardPage = () => {
                         </p>
                     </div>
 
-                    <div className='grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3'>
-                        {groups.map(
-                            (group) => (
-                                <GroupCard
-                                    key={
-                                        group._id
-                                    }
-                                    id={
-                                        group._id
-                                    }
-                                    title={
-                                        group.name
-                                    }
-                                    members={
-                                        group
-                                            .members
-                                            .length
-                                    }
-                                />
-                            )
-                        )}
+                    <SyncStatusCard />
+
+                    <div className='mt-6 grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3'>
+                        {groups.map((group) => (
+                            <GroupCard
+                                key={group._id}
+                                id={group._id}
+                                title={group.name}
+                                members={
+                                    group.members.length
+                                }
+                            />
+                        ))}
 
                         <CreateGroupCard />
                     </div>
