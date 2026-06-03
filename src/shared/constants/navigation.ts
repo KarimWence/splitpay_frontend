@@ -1,10 +1,15 @@
-import { LayoutDashboard, Users, Activity, User } from "lucide-react";
+import {
+    Home,
+    Users,
+    Mail,
+    User,
+} from 'lucide-react'
 
 export const navigationItems = [
     {
         label: 'Dashboard',
         path: '/dashboard',
-        icon: LayoutDashboard,
+        icon: Home,
     },
     {
         label: 'Groups',
@@ -14,7 +19,7 @@ export const navigationItems = [
     {
         label: 'Invitations',
         path: '/invitations',
-        icon: Users,
+        icon: Mail,
     },
     {
         label: 'Profile',

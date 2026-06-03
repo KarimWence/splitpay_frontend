@@ -14,7 +14,7 @@ export const useRegister = () => {
         onSuccess: (data) => {
             setAuth(data);
             toast.success('Registration successful!');
-            navigate('/dashboard');
+            navigate('/login');
         },
 
         onError: (error) => {
