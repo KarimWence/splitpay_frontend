@@ -39,13 +39,6 @@ export const AppNavbar = ({ onOpenSidebar, }: Props) => {
           <Menu size={28} />
         </button>
 
-        <div className='hidden h-12 w-[320px] items-center rounded-xl border border-gray-200 bg-gray-50 px-4 md:flex'>
-          <input
-            type='text'
-            placeholder='Search groups...'
-            className='w-full bg-transparent outline-none'
-          />
-        </div>
       </div>
 
       <div className='flex items-center gap-5'>
@@ -72,9 +65,6 @@ export const AppNavbar = ({ onOpenSidebar, }: Props) => {
           />
         </div>
 
-        <button className='text-gray-500 transition hover:text-gray-700'>
-          <Settings size={22} />
-        </button>
 
         <div className='flex h-11 w-11 items-center justify-center rounded-full bg-blue-700 font-semibold text-white'>
           {initials}
