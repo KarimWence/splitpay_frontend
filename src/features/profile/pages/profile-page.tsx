@@ -21,6 +21,28 @@ export const ProfilePage = () => {
 
   const [isEditOpen, setIsEditOpen] = useState(false)
 
+  const completionFields = [
+    profile?.avatar ?? '',
+    profile?.bio ?? '',
+    profile?.phone ?? '',
+    profile?.address ?? '',
+  ]
+
+  const completedFields =
+    completionFields.filter(
+      (field) =>
+        field &&
+        field.trim() !== ''
+    ).length
+
+  const profileCompletion =
+    Math.round(
+      (completedFields /
+        completionFields.length) *
+      100
+    )
+
+
   if (isLoading) {
     return (
       <DashboardLayout>
@@ -30,7 +52,6 @@ export const ProfilePage = () => {
       </DashboardLayout>
     )
   }
-
   return (
     <DashboardLayout>
       <div className='space-y-8'>
@@ -138,24 +159,71 @@ export const ProfilePage = () => {
           <div className='space-y-6'>
             <section className='rounded-3xl border border-gray-200 bg-white p-8 shadow-sm'>
               <h3 className='text-3xl font-bold text-gray-900'>
-                Preferences
+                Account Information
               </h3>
 
               <div className='mt-8 space-y-6'>
                 <div>
                   <p className='text-xs font-semibold uppercase tracking-[0.2em] text-gray-400'>
-                    Currency
+                    Member Since
                   </p>
 
                   <div className='mt-3 rounded-2xl border border-gray-300 px-4 py-4 text-gray-700'>
-                    USD ($)
+                    {profile?.createdAt
+                      ? new Date(
+                        profile.createdAt
+                      ).toLocaleDateString()
+                      : 'Unknown'}
                   </div>
                 </div>
 
-                {/*
-                                Notifications feature
-                                intentionally disabled for MVP
-                                */}
+                <div>
+                  <p className='text-xs font-semibold uppercase tracking-[0.2em] text-gray-400'>
+                    Last Updated
+                  </p>
+
+                  <div className='mt-3 rounded-2xl border border-gray-300 px-4 py-4 text-gray-700'>
+                    {profile?.updatedAt
+                      ? new Date(
+                        profile.updatedAt
+                      ).toLocaleDateString()
+                      : 'Unknown'}
+                  </div>
+                </div>
+
+                <div>
+                  <p className='text-xs font-semibold uppercase tracking-[0.2em] text-gray-400'>
+                    Profile Completion
+                  </p>
+
+                  <div className='mt-3'>
+                    <div className='h-3 overflow-hidden rounded-full bg-gray-200'>
+                      <div
+                        className='h-full rounded-full bg-blue-700 transition-all'
+                        style={{
+                          width: `${profileCompletion}%`,
+                        }}
+                      />
+                    </div>
+
+                    <p className='mt-3 text-sm font-medium text-gray-700'>
+                      {profileCompletion}% completed
+                    </p>
+                    {profileCompletion === 0 && (
+                      <div className='mt-4 rounded-2xl border border-amber-200 bg-amber-50 p-4'>
+                        <p className='text-sm font-medium text-amber-700'>
+                          Your profile is empty.
+                        </p>
+
+                        <p className='mt-1 text-sm text-amber-600'>
+                          Add your personal
+                          information to complete
+                          your profile.
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                </div>
               </div>
             </section>
 

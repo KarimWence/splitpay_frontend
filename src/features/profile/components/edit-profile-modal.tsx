@@ -1,5 +1,7 @@
 import { useEffect } from 'react'
 
+import { zodResolver } from '@hookform/resolvers/zod'
+
 import { useForm } from 'react-hook-form'
 
 import { X } from 'lucide-react'
@@ -8,7 +10,10 @@ import { useProfile } from '../hooks/use-profile'
 
 import { useUpdateProfile } from '../hooks/use-update-profile'
 
-import type { UpdateProfileDto } from '../types/profile.types'
+import {
+    updateProfileSchema,
+    type UpdateProfileSchema,
+} from '../schemas/update-profile.schema'
 
 interface Props {
     isOpen: boolean
@@ -33,8 +38,17 @@ export const EditProfileModal = ({
         handleSubmit,
 
         reset,
+
+        formState: {
+            errors,
+        },
     } =
-        useForm<UpdateProfileDto>()
+        useForm<UpdateProfileSchema>({
+            resolver:
+                zodResolver(
+                    updateProfileSchema
+                ),
+        })
 
     useEffect(() => {
         if (profile) {
@@ -54,7 +68,7 @@ export const EditProfileModal = ({
     }, [profile, reset])
 
     const onSubmit = (
-        data: UpdateProfileDto
+        data: UpdateProfileSchema
     ) => {
         updateProfileMutation.mutate(
             data,
@@ -110,6 +124,11 @@ export const EditProfileModal = ({
                             )}
                             className='mt-2 h-14 w-full rounded-2xl border border-gray-300 px-4 outline-none transition focus:border-blue-700'
                         />
+                        {errors.avatar && (
+                            <p className='mt-2 text-sm text-red-500'>
+                                {errors.avatar.message}
+                            </p>
+                        )}
                     </div>
 
                     <div>
@@ -124,6 +143,11 @@ export const EditProfileModal = ({
                             )}
                             className='mt-2 h-14 w-full rounded-2xl border border-gray-300 px-4 outline-none transition focus:border-blue-700'
                         />
+                        {errors.phone && (
+                            <p className='mt-2 text-sm text-red-500'>
+                                {errors.phone.message}
+                            </p>
+                        )}
                     </div>
 
                     <div>
@@ -138,6 +162,11 @@ export const EditProfileModal = ({
                             )}
                             className='mt-2 h-14 w-full rounded-2xl border border-gray-300 px-4 outline-none transition focus:border-blue-700'
                         />
+                        {errors.address && (
+                            <p className='mt-2 text-sm text-red-500'>
+                                {errors.address.message}
+                            </p>
+                        )}
                     </div>
 
                     <div>
@@ -152,6 +181,11 @@ export const EditProfileModal = ({
                             )}
                             className='mt-2 w-full rounded-2xl border border-gray-300 px-4 py-4 outline-none transition focus:border-blue-700'
                         />
+                        {errors.bio && (
+                            <p className='mt-2 text-sm text-red-500'>
+                                {errors.bio.message}
+                            </p>
+                        )}
                     </div>
 
                     <div className='flex justify-end gap-3 pt-4'>
