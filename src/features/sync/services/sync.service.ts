@@ -29,44 +29,40 @@ export const saveBootstrapData =
     async (
         data: any
     ) => {
-        console.log("GROUP");
+
         await GroupRepository.upsertMany(
             data.groups.map(
                 mapGroupToEntity
             )
         )
-        console.log("EXPENSE");
+
         await ExpenseRepository.upsertMany(
             data.expenses.map(
                 mapExpenseToEntity
             )
         )
-        console.log("SETTLEMENT");
+
         await SettlementRepository.upsertMany(
             data.settlements.map(
                 mapSettlementToEntity
             )
         )
-        console.log("ACTIVITY");
         await ActivityRepository.upsertMany(
             data.activities.map(
                 mapActivityToEntity
             )
         )
-        console.log("NOTIFICATION");
         await NotificationRepository.upsertMany(
             data.notifications.map(
                 mapNotificationToEntity
             )
         )
 
-        console.log("INVITATION");
         await InvitationRepository.upsertMany(
             data.invitations.map(
                 mapInvitationToEntity
             )
         )
-        console.log("SYNC STATE");
         await SyncStateRepository.setLastSync(
             data.serverTime
         )
