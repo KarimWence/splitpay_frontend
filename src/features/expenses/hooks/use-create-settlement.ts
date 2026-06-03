@@ -37,7 +37,18 @@ export const useCreateSettlement =
                 )
             },
 
-            onError: () => {
+            onError: (error: any) => {
+
+                console.log(
+                    'SETTLEMENT ERROR',
+                    error
+                )
+
+                console.log(
+                    'SETTLEMENT RESPONSE',
+                    error?.response?.data
+                )
+
                 toast.error(
                     'Could not settle debt'
                 )

@@ -84,16 +84,25 @@ interface CreateSettlementDto {
     toUserId: string
 
     amount: number
+
+    requestId?: string
 }
 
 export const createSettlementRequest =
     async (
         data: CreateSettlementDto
     ) => {
-        const response = await api.post(
-            '/expenses/settlements',
-            data
-        )
+        const response =
+            await api.post(
+                '/expenses/settlements',
+                {
+                    ...data,
+
+                    requestId:
+                        data.requestId ??
+                        uuidv4(),
+                }
+            )
 
         return response.data
     }
