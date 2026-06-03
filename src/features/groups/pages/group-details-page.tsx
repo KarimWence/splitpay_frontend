@@ -23,9 +23,11 @@ import { useSettlements } from '@/features/expenses/hooks/use-settlements'
 import { SettlementItem } from '@/features/expenses/components/settlement-item'
 
 import { ExpenseCard } from '@/features/expenses/components/expense-card'
+import { useJoinGroup } from '@/features/socket/use-join-group'
 
 export const GroupDetailsPage = () => {
     const { groupId } = useParams()
+    useJoinGroup(groupId)
 
     const [isAddExpenseOpen, setIsAddExpenseOpen] = useState(false)
 
