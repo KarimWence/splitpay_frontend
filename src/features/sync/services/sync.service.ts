@@ -101,6 +101,16 @@ const applyChanges = async (
     }
 
     if (
+        data.settlements?.length
+    ) {
+        await SettlementRepository.upsertMany(
+            data.settlements.map(
+                mapSettlementToEntity
+            )
+        )
+    }
+
+    if (
         data.activities?.length
     ) {
         await ActivityRepository.upsertMany(

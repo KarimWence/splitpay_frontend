@@ -35,6 +35,9 @@ export const SettlementItem = ({
         useCreateSettlement(groupId)
 
     const confirmSettlement = () => {
+        console.log(
+            'SETTLEMENT CLICKED'
+        )
         createSettlementMutation.mutate(
             {
                 groupId,

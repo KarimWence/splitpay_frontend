@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { toast } from 'sonner'
 
-import { createSettlementRequest } from '../api/expenses.api'
+import { createSettlementOfflineFirst } from '../services/create-settlement-offline.service'
 
 export const useCreateSettlement =
     (groupId: string) => {
@@ -11,13 +11,23 @@ export const useCreateSettlement =
 
         return useMutation({
             mutationFn:
-                createSettlementRequest,
+                createSettlementOfflineFirst,
 
-            onSuccess: () => {
-                toast.success(
-                    'Settlement completed'
-                )
+            networkMode: 'always',
+            onSuccess: (
+                result: any
+            ) => {
 
+                if (
+                    result?.offline
+                ) {
+
+                    toast.success(
+                        'Settlement saved offline'
+                    )
+
+                    return
+                }
                 queryClient.invalidateQueries(
                     {
                         queryKey: [
@@ -35,19 +45,13 @@ export const useCreateSettlement =
                         ],
                     }
                 )
+
+                toast.success(
+                    'Settlement completed'
+                )
             },
 
             onError: (error: any) => {
-
-                console.log(
-                    'SETTLEMENT ERROR',
-                    error
-                )
-
-                console.log(
-                    'SETTLEMENT RESPONSE',
-                    error?.response?.data
-                )
 
                 toast.error(
                     'Could not settle debt'

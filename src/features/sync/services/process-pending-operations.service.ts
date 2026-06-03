@@ -2,6 +2,8 @@ import { createExpenseRequest } from '@/features/expenses/api/expenses.api'
 
 import { PendingOperationRepository } from '@/shared/database/repositories/pending-operation.repository'
 
+import { createSettlementRequest } from '@/features/expenses/api/expenses.api'
+
 export const processPendingOperations =
     async () => {
         const operations =
@@ -31,6 +33,25 @@ export const processPendingOperations =
 
 
                         processed++
+                        break
+                    }
+                    case 'CREATE_SETTLEMENT': {
+
+                        const payload =
+                            JSON.parse(
+                                operation.payload
+                            )
+
+                        await createSettlementRequest(
+                            payload
+                        )
+
+                        await PendingOperationRepository.remove(
+                            operation.id
+                        )
+
+                        processed++
+
                         break
                     }
                 }
