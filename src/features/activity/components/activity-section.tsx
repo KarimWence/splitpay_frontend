@@ -12,6 +12,7 @@ export const ActivitySection = ({
     activities,
 }: Props) => {
     if (
+        !activities ||
         activities.length === 0
     ) {
         return (
