@@ -61,9 +61,6 @@ export const AppSidebar = ({ isOpen, onClose }: Props) => {
         </nav>
 
         <div className='mt-auto space-y-5'>
-          <button className='h-14 w-full rounded-2xl bg-blue-700 font-semibold text-white shadow-lg transition hover:bg-blue-800'>
-            Add Expense
-          </button>
 
           <button
             onClick={logout}

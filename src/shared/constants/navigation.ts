@@ -17,11 +17,6 @@ export const navigationItems = [
         icon: Users,
     },
     {
-        label: 'Activity',
-        path: '/activity',
-        icon: Activity,
-    },
-    {
         label: 'Profile',
         path: '/profile',
         icon: User,
