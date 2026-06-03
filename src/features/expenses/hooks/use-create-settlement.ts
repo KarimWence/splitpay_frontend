@@ -22,6 +22,28 @@ export const useCreateSettlement =
                     result?.offline
                 ) {
 
+                    console.log(
+                        'OFFLINE SUCCESS'
+                    )
+
+                    queryClient.invalidateQueries(
+                        {
+                            queryKey: [
+                                'settlements',
+                                groupId,
+                            ],
+                        }
+                    )
+
+                    queryClient.invalidateQueries(
+                        {
+                            queryKey: [
+                                'group-balances',
+                                groupId,
+                            ],
+                        }
+                    )
+
                     toast.success(
                         'Settlement saved offline'
                     )

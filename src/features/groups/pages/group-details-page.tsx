@@ -30,6 +30,9 @@ import { ActivitySection } from '@/features/activity/components/activity-section
 
 import { useAuthStore } from '@/features/auth/store/auth.store'
 
+import { usePendingSettlements } from '@/features/expenses/hooks/use-pending-settlements'
+
+
 export const GroupDetailsPage = () => {
     const { groupId } = useParams()
     useJoinGroup(groupId)
@@ -65,6 +68,17 @@ export const GroupDetailsPage = () => {
         data: settlements,
     } = useSettlements(
         groupId || ''
+    )
+
+    const {
+        data: pendingSettlements,
+    } = usePendingSettlements(
+        groupId || ''
+    )
+
+    console.log(
+        'PENDING SETTLEMENTS',
+        pendingSettlements
     )
 
     const mySettlements =
@@ -228,6 +242,58 @@ export const GroupDetailsPage = () => {
                         </p>
                     )}
                 </div>
+                {pendingSettlements &&
+                    pendingSettlements.length >
+                    0 && (
+                        <div className='rounded-3xl border border-amber-200 bg-amber-50 p-6 shadow-sm'>
+                            <div>
+                                <h2 className='text-2xl font-bold text-amber-900'>
+                                    Pending Settlements
+                                </h2>
+
+                                <p className='mt-2 text-amber-700'>
+                                    These settlements are waiting
+                                    to be synchronized.
+                                </p>
+                            </div>
+
+                            <div className='mt-6 space-y-3'>
+                                {pendingSettlements.map(
+                                    (
+                                        settlement: any,
+                                        index: number
+                                    ) => (
+                                        <div
+                                            key={
+                                                settlement.requestId ??
+                                                index
+                                            }
+                                            className='flex items-center justify-between rounded-2xl border border-amber-200 bg-white px-5 py-4'
+                                        >
+                                            <div>
+                                                <p className='font-semibold text-gray-900'>
+                                                    Settlement
+                                                </p>
+
+                                                <p className='mt-1 text-sm text-gray-500'>
+                                                    $
+                                                    {Number(
+                                                        settlement.amount
+                                                    ).toFixed(
+                                                        2
+                                                    )}
+                                                </p>
+                                            </div>
+
+                                            <span className='rounded-full bg-amber-100 px-3 py-1 text-sm font-medium text-amber-700'>
+                                                ⏳ Pending
+                                            </span>
+                                        </div>
+                                    )
+                                )}
+                            </div>
+                        </div>
+                    )}
                 <ActivitySection
                     activities={
                         activities
