@@ -9,9 +9,9 @@ import { SidebarItem } from '../navigation/sidebar-item'
 import { useLogout } from '@/features/auth/hooks/use-logout'
 
 interface Props {
-    isOpen: boolean
+  isOpen: boolean
 
-    onClose: () => void
+  onClose: () => void
 }
 
 export const AppSidebar = ({ isOpen, onClose }: Props) => {
@@ -24,13 +24,13 @@ export const AppSidebar = ({ isOpen, onClose }: Props) => {
       <div
         onClick={onClose}
         className={`fixed inset-0 z-40 bg-black/40 transition md:hidden ${isOpen
-            ? 'visible opacity-100'
-            : 'invisible opacity-0'
+          ? 'visible opacity-100'
+          : 'invisible opacity-0'
           }`}
       />
 
       <aside
-        className={`fixed top-0 left-0 z-50 flex h-screen w-[260px] flex-col border-r border-gray-200 bg-white px-6 py-8 transition-transform duration-300 md:static md:translate-x-0 ${isOpen
+        className={`fixed top-0 left-0 z-50 flex h-screen w-[260px] flex-col border-r border-gray-200 bg-white px-6 py-8 transition-transform duration-300 md:sticky md:top-0 md:h-screen md:translate-x-0 ${isOpen
             ? 'translate-x-0'
             : '-translate-x-full'
           }`}
