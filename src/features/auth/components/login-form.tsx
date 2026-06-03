@@ -9,7 +9,7 @@ import {
 } from '../schemas/login.schema';
 
 import { useLogin } from '../hooks/use-login';
-import { SocialLogin } from './social-login';
+
 
 export const LoginForm = () => {
     const loginMutation = useLogin();
@@ -164,7 +164,6 @@ export const LoginForm = () => {
                 <div className='h-px flex-1 bg-gray-200' />
             </div>
 
-            <SocialLogin />
 
             {/* FOOTER */}
 

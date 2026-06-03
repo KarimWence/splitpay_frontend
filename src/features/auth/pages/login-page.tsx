@@ -30,17 +30,9 @@ export const LoginPage = () => {
 
         {/* SECURITY */}
 
-        <div className='mt-6 flex items-center justify-center gap-6 text-xs text-gray-400'>
-          <div className='flex items-center gap-2'>
-            <span>🛡️</span>
-            Secure SSL
-          </div>
-
-          <div className='flex items-center gap-2'>
-            <span>🔒</span>
-            256-bit AES
-          </div>
-        </div>
+        <p className='mt-6 text-center text-sm text-gray-400'>
+          Offline-first • Real-time sync • Smart settlements
+        </p>
       </div>
     </main>
   )

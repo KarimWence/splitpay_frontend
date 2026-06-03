@@ -6,13 +6,13 @@ import { useAuthStore } from '../store/auth.store';
 
 export const useRegister = () => {
     const navigate = useNavigate();
-    const setAuth = useAuthStore((state) => state.setAuth);
+    /* const setAuth = useAuthStore((state) => state.setAuth); */
 
     return useMutation({
         mutationFn: registerRequest,
 
         onSuccess: (data) => {
-            setAuth(data);
+
             toast.success('Registration successful!');
             navigate('/login');
         },
