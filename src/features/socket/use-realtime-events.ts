@@ -8,6 +8,7 @@ import { SOCKET_EVENTS } from './socket-events'
 import type { Expense } from '@/features/expenses/types/expense.types'
 import { syncChanges } from '../sync/services/sync.service'
 import type { Invitation } from '../invitations/types/invitation.types'
+import type { SettlementEntity } from '@/shared/database/db'
 
 export const useRealtimeEvents = () => {
     const queryClient =
@@ -33,6 +34,48 @@ export const useRealtimeEvents = () => {
                 await queryClient.invalidateQueries({
                     queryKey: [
                         'group-balances',
+                    ],
+                })
+
+                await queryClient.invalidateQueries({
+                    queryKey: [
+                        'notifications',
+                    ],
+                })
+
+                await queryClient.invalidateQueries({
+                    queryKey: [
+                        'settlements',
+                    ],
+                })
+            }
+
+
+        const onSettlementCreated =
+            async (payload: SettlementEntity) => {
+
+                console.log(
+                    'SETTLEMENT CREATED',
+                    payload
+                )
+
+                await syncChanges()
+
+                await queryClient.invalidateQueries({
+                    queryKey: [
+                        'settlements',
+                    ],
+                })
+
+                await queryClient.invalidateQueries({
+                    queryKey: [
+                        'group-balances',
+                    ],
+                })
+
+                await queryClient.invalidateQueries({
+                    queryKey: [
+                        'notifications',
                     ],
                 })
             }
@@ -61,6 +104,7 @@ export const useRealtimeEvents = () => {
             }
         const onActivityCreated =
             async () => {
+                await syncChanges()
 
                 await queryClient.invalidateQueries({
                     queryKey: [
@@ -72,6 +116,11 @@ export const useRealtimeEvents = () => {
         socket.on(
             SOCKET_EVENTS.EXPENSE_CREATED,
             onExpenseCreated
+        )
+
+        socket.on(
+            SOCKET_EVENTS.SETTLEMENT_CREATED,
+            onSettlementCreated
         )
 
         socket.on(
@@ -88,6 +137,10 @@ export const useRealtimeEvents = () => {
             socket.off(
                 SOCKET_EVENTS.EXPENSE_CREATED,
                 onExpenseCreated
+            )
+            socket.off(
+                SOCKET_EVENTS.SETTLEMENT_CREATED,
+                onSettlementCreated
             )
             socket.off(
                 SOCKET_EVENTS.MEMBER_INVITED,
