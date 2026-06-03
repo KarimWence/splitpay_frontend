@@ -87,10 +87,6 @@ export const ProfilePage = () => {
                       Edit Profile
                     </button>
 
-                    <button className='rounded-2xl border border-gray-300 px-5 py-3 text-sm font-semibold text-gray-700 transition hover:bg-gray-50'>
-                      Change
-                      Password
-                    </button>
                   </div>
                 </div>
               </div>
