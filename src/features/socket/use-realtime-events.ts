@@ -7,6 +7,7 @@ import { socket } from './socket.service'
 import { SOCKET_EVENTS } from './socket-events'
 import type { Expense } from '@/features/expenses/types/expense.types'
 import { syncChanges } from '../sync/services/sync.service'
+import type { Invitation } from '../invitations/types/invitation.types'
 
 export const useRealtimeEvents = () => {
     const queryClient =
@@ -35,6 +36,29 @@ export const useRealtimeEvents = () => {
                     ],
                 })
             }
+
+        const onMemberInvited =
+            async (payload: Invitation) => {
+
+                console.log(
+                    'MEMBER INVITED',
+                    payload
+                )
+
+                await syncChanges()
+
+                await queryClient.invalidateQueries({
+                    queryKey: [
+                        'enriched-invitations',
+                    ],
+                })
+
+                await queryClient.invalidateQueries({
+                    queryKey: [
+                        'notifications',
+                    ],
+                })
+            }
         const onActivityCreated =
             async () => {
 
@@ -51,6 +75,11 @@ export const useRealtimeEvents = () => {
         )
 
         socket.on(
+            SOCKET_EVENTS.MEMBER_INVITED,
+            onMemberInvited
+        )
+
+        socket.on(
             SOCKET_EVENTS.ACTIVITY_CREATED,
             onActivityCreated
         )
@@ -59,6 +88,10 @@ export const useRealtimeEvents = () => {
             socket.off(
                 SOCKET_EVENTS.EXPENSE_CREATED,
                 onExpenseCreated
+            )
+            socket.off(
+                SOCKET_EVENTS.MEMBER_INVITED,
+                onMemberInvited
             )
             socket.off(
                 SOCKET_EVENTS.ACTIVITY_CREATED,

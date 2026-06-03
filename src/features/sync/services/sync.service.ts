@@ -130,8 +130,8 @@ export const syncChanges =
             )
 
         console.log(
-            'CHANGES GROUPS',
-            changes.groups
+            'CHANGES INVITATIONS',
+            changes.invitations
         )
         await applyChanges(
             changes
