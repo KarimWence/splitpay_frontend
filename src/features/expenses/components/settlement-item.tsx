@@ -2,6 +2,10 @@ import { useUser } from '@/features/auth/hooks/use-user'
 
 import { useCreateSettlement } from '../hooks/use-create-settlement'
 
+import { useState } from 'react'
+
+import { ConfirmSettlementModal } from './confirm-settlement-modal'
+
 interface Props {
     groupId: string
 
@@ -30,17 +34,25 @@ export const SettlementItem = ({
     const createSettlementMutation =
         useCreateSettlement(groupId)
 
-    const handleSettle = () => {
+    const confirmSettlement = () => {
         createSettlementMutation.mutate(
             {
                 groupId,
-
                 toUserId: to,
-
                 amount,
+            },
+            {
+                onSuccess: () => {
+                    setIsConfirmOpen(false)
+                },
             }
         )
     }
+
+    const [
+        isConfirmOpen,
+        setIsConfirmOpen,
+    ] = useState(false)
 
     return (
         <div className='flex items-center justify-between rounded-2xl bg-gray-50 px-5 py-4'>
@@ -74,8 +86,8 @@ export const SettlementItem = ({
                 </p>
 
                 <button
-                    onClick={
-                        handleSettle
+                    onClick={() =>
+                        setIsConfirmOpen(true)
                     }
                     disabled={
                         createSettlementMutation.isPending
@@ -85,6 +97,18 @@ export const SettlementItem = ({
                     Settle Up
                 </button>
             </div>
+            <ConfirmSettlementModal
+                isOpen={isConfirmOpen}
+                amount={amount}
+                isLoading={
+                    createSettlementMutation.isPending
+                }
+                onClose={() =>
+                    setIsConfirmOpen(false)
+                }
+                onConfirm={confirmSettlement}
+            />
         </div>
+
     )
 }
