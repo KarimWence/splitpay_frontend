@@ -6,7 +6,7 @@ import { useGroups } from '../hooks/use-groups'
 
 import { CreateGroupModal } from '../components/create-group-modal'
 
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 
 export const GroupsPage = () => {
   const { data, isLoading } =
@@ -15,7 +15,17 @@ export const GroupsPage = () => {
   const [isCreateOpen, setIsCreateOpen] =
     useState(false)
 
+  const [searchParams] =
+    useSearchParams()
+
   const navigate = useNavigate()
+
+  const [isModalOpen, setIsModalOpen] =
+    useState(
+      searchParams.get(
+        'create'
+      ) === 'true'
+    )
 
   return (
     <DashboardLayout>
@@ -123,14 +133,14 @@ export const GroupsPage = () => {
                     </div>
 
                     <button
-                        onClick={() =>
-                            navigate(
-                                `/groups/${group._id}`
-                            )
-                        }
-                        className='rounded-xl bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-200'
+                      onClick={() =>
+                        navigate(
+                          `/groups/${group._id}`
+                        )
+                      }
+                      className='rounded-xl bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-200'
                     >
-                        Open
+                      Open
                     </button>
                   </div>
                 </div>
@@ -139,10 +149,14 @@ export const GroupsPage = () => {
           )}
 
         <CreateGroupModal
-          isOpen={isCreateOpen}
-          onClose={() =>
-            setIsCreateOpen(false)
+          isOpen={
+            isCreateOpen ||
+            isModalOpen
           }
+          onClose={() => {
+            setIsCreateOpen(false)
+            setIsModalOpen(false)
+          }}
         />
       </div>
     </DashboardLayout>
