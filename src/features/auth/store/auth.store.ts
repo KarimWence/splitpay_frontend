@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import type { User } from '../types/auth.types'
 import { persist } from 'zustand/middleware'
-
+import { clearDatabase } from '@/shared/database/clear-database'
 interface AuthState {
   user: User | null
   accessToken: string | null
@@ -30,7 +30,9 @@ export const useAuthStore =
             isAuthenticated: true,
           }),
 
-        logout: () => {
+        logout: async () => {
+          await clearDatabase()
+
           localStorage.removeItem(
             'splitpay-auth'
           )

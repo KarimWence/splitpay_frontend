@@ -9,8 +9,8 @@ export const useLogout = () => {
     (state) => state.logout
   )
 
-  return () => {
-    logout()
+  return async () => {
+    await logout()
 
     navigate('/login')
   }
