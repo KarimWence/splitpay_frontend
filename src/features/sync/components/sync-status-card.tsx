@@ -36,10 +36,14 @@ export const SyncStatusCard = () => {
                         }`}
                 >
                     {isOnline ? (
-                        <Wifi size={22} />
+                        <Wifi
+                            size={22}
+                            className='animate-pulse'
+                        />
                     ) : (
                         <WifiOff
                             size={22}
+
                         />
                     )}
                 </div>
@@ -90,6 +94,11 @@ export const SyncStatusCard = () => {
             <div className='mt-4 flex items-center gap-2 rounded-2xl bg-blue-50 p-4 text-sm text-blue-700'>
                 <RefreshCcw
                     size={16}
+                    className={
+                        pendingCount > 0
+                            ? 'animate-spin'
+                            : ''
+                    }
                 />
 
                 <span>
