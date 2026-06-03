@@ -35,7 +35,7 @@ export const AddMemberModal = ({
             {
                 groupId,
 
-                userId,
+                invitedUserId: userId,
             },
 
             {
@@ -91,11 +91,13 @@ export const AddMemberModal = ({
                 <div className='mt-6 max-h-[320px] space-y-3 overflow-y-auto'>
                     {users?.map((user) => (
                         <button
-                            key={user.id}
-                            onClick={() =>
+                            key={user._id}
+                            onClick={() => {
+
                                 handleAddMember(
-                                    user.id
+                                    user._id
                                 )
+                            }
                             }
                             className='flex w-full items-center justify-between rounded-2xl border border-gray-200 p-4 text-left transition hover:bg-gray-50'
                         >

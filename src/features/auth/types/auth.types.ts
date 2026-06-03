@@ -1,7 +1,7 @@
 export interface LoginDto {
-  email: string;
-  password: string;
-  rememberMe?: boolean;
+    email: string;
+    password: string;
+    rememberMe?: boolean;
 }
 
 export interface User {
@@ -25,7 +25,7 @@ export interface RegisterDto {
 }
 
 export interface PublicUser {
-    id: string
+    _id: string
     email: string
     name: string
     lastName: string

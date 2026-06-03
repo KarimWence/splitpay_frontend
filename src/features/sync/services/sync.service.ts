@@ -21,6 +21,8 @@ import { mapActivityToEntity } from '../mappers/activity.mapper'
 import { changesRequest } from '../api/sync.api'
 
 import { processPendingOperations } from './process-pending-operations.service'
+import { mapNotificationToEntity } from '../mappers/notification.mapper'
+import { mapInvitationToEntity } from '../mappers/invitation.mapper'
 
 export const saveBootstrapData =
     async (
@@ -50,11 +52,15 @@ export const saveBootstrapData =
         )
 
         await NotificationRepository.upsertMany(
-            data.notifications
+            data.notifications.map(
+                mapNotificationToEntity
+            )
         )
 
         await InvitationRepository.upsertMany(
-            data.invitations
+            data.invitations.map(
+                mapInvitationToEntity
+            )
         )
 
         await SyncStateRepository.setLastSync(
@@ -123,6 +129,10 @@ export const syncChanges =
                 lastSync
             )
 
+        console.log(
+            'CHANGES GROUPS',
+            changes.groups
+        )
         await applyChanges(
             changes
         )

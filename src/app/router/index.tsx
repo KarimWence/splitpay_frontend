@@ -20,6 +20,7 @@ import { ActivityPage } from '@/features/activity/pages/activity-page'
 import { ProfilePage } from '@/features/profile/pages/profile-page'
 
 import { GroupDetailsPage } from '@/features/groups/pages/group-details-page'
+import { InvitationsPage } from '@/features/invitations/pages/invitations-page'
 
 export const AppRouter = () => {
   return (
@@ -60,6 +61,15 @@ export const AppRouter = () => {
           element={
             <ProtectedRoute>
               <GroupsPage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path='/invitations'
+          element={
+            <ProtectedRoute>
+              <InvitationsPage />
             </ProtectedRoute>
           }
         />

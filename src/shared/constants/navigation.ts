@@ -12,6 +12,11 @@ export const navigationItems = [
         icon: Users,
     },
     {
+        label: 'Invitations',
+        path: '/invitations',
+        icon: Users,
+    },
+    {
         label: 'Activity',
         path: '/activity',
         icon: Activity,

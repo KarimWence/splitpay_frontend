@@ -1,4 +1,6 @@
 import { api } from '@/shared/services/api'
+import { v4 as uuidv4 } from 'uuid'
+
 
 import type {
     CreateGroupDto,
@@ -43,6 +45,28 @@ export const addMemberRequest =
                 userId,
             }
         )
+
+        return response.data
+    }
+
+
+export const createInvitationRequest =
+    async ({
+        groupId,
+        invitedUserId,
+    }: {
+        groupId: string
+        invitedUserId: string
+    }) => {
+        console.log({ invitedUserId, groupId });
+        const response =
+            await api.post(
+                `/expenses/groups/${groupId}/invitations`,
+                {
+                    invitedUserId,
+                    requestId: uuidv4()
+                }
+            )
 
         return response.data
     }

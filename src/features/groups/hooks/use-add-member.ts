@@ -4,7 +4,7 @@ import { useQueryClient } from '@tanstack/react-query'
 
 import { toast } from 'sonner'
 
-import { addMemberRequest } from '../api/groups.api'
+import { createInvitationRequest } from '../api/groups.api'
 
 export const useAddMember = (
     groupId: string
@@ -12,11 +12,11 @@ export const useAddMember = (
     const queryClient = useQueryClient()
 
     return useMutation({
-        mutationFn: addMemberRequest,
+        mutationFn: createInvitationRequest,
 
         onSuccess: () => {
             toast.success(
-                'Member added successfully'
+                'Invitation sent successfully'
             )
 
             queryClient.invalidateQueries({
@@ -29,7 +29,7 @@ export const useAddMember = (
 
         onError: () => {
             toast.error(
-                'Could not add member'
+                'Could not send invitation'
             )
         },
     })
