@@ -28,9 +28,16 @@ import { useJoinGroup } from '@/features/socket/use-join-group'
 import { useGroupActivities } from '@/features/activity/hooks/use-group-activities'
 import { ActivitySection } from '@/features/activity/components/activity-section'
 
+import { useAuthStore } from '@/features/auth/store/auth.store'
+
 export const GroupDetailsPage = () => {
     const { groupId } = useParams()
     useJoinGroup(groupId)
+
+    const currentUser =
+        useAuthStore(
+            (state) => state.user
+        )
 
     const [isAddExpenseOpen, setIsAddExpenseOpen] = useState(false)
 
@@ -59,6 +66,13 @@ export const GroupDetailsPage = () => {
     } = useSettlements(
         groupId || ''
     )
+
+    const mySettlements =
+        settlements?.filter(
+            (settlement) =>
+                settlement.from ===
+                currentUser?.id
+        ) ?? []
 
     const {
         data: activities,
@@ -165,51 +179,55 @@ export const GroupDetailsPage = () => {
                     </div>
                 )}
 
-                {settlements &&
-                    settlements.length >
-                    0 && (
-                        <div className='rounded-3xl border border-gray-200 bg-white p-6 shadow-sm'>
-                            <div>
-                                <h2 className='text-2xl font-bold text-gray-900'>
-                                    Suggested
-                                    Settlements
-                                </h2>
+                <div className='rounded-3xl border border-gray-200 bg-white p-6 shadow-sm'>
+                    <div>
+                        <h2 className='text-2xl font-bold text-gray-900'>
+                            Suggested
+                            Settlements
+                        </h2>
 
-                                <p className='mt-2 text-gray-500'>
-                                    Simplified debt
-                                    resolution
-                                </p>
-                            </div>
+                        <p className='mt-2 text-gray-500'>
+                            Simplified debt
+                            resolution
+                        </p>
+                    </div>
 
-                            <div className='mt-6 space-y-3'>
-                                {settlements.map(
-                                    (
-                                        settlement,
-                                        index
-                                    ) => (
-                                        <SettlementItem
-                                            key={
-                                                index
-                                            }
-                                            groupId={
-                                                groupId ||
-                                                ''
-                                            }
-                                            from={
-                                                settlement.from
-                                            }
-                                            to={
-                                                settlement.to
-                                            }
-                                            amount={
-                                                settlement.amount
-                                            }
-                                        />
-                                    )
-                                )}
-                            </div>
+                    {mySettlements.length >
+                        0 ? (
+                        <div className='mt-6 space-y-3'>
+                            {mySettlements.map(
+                                (
+                                    settlement,
+                                    index
+                                ) => (
+                                    <SettlementItem
+                                        key={
+                                            index
+                                        }
+                                        groupId={
+                                            groupId ||
+                                            ''
+                                        }
+                                        from={
+                                            settlement.from
+                                        }
+                                        to={
+                                            settlement.to
+                                        }
+                                        amount={
+                                            settlement.amount
+                                        }
+                                    />
+                                )
+                            )}
                         </div>
+                    ) : (
+                        <p className='mt-6 text-gray-500'>
+                            You have no pending
+                            settlements.
+                        </p>
                     )}
+                </div>
                 <ActivitySection
                     activities={
                         activities
