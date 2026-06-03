@@ -6,6 +6,7 @@ import { socket } from './socket.service'
 
 import { SOCKET_EVENTS } from './socket-events'
 import type { Expense } from '@/features/expenses/types/expense.types'
+import { syncChanges } from '../sync/services/sync.service'
 
 export const useRealtimeEvents = () => {
     const queryClient =
@@ -13,19 +14,22 @@ export const useRealtimeEvents = () => {
 
     useEffect(() => {
         const onExpenseCreated =
-            (payload: Expense) => {
+            async (payload: Expense) => {
+
                 console.log(
                     'EXPENSE CREATED',
                     payload
                 )
 
-                queryClient.invalidateQueries({
+                await syncChanges()
+
+                await queryClient.invalidateQueries({
                     queryKey: [
                         'group-expenses',
                     ],
                 })
 
-                queryClient.invalidateQueries({
+                await queryClient.invalidateQueries({
                     queryKey: [
                         'group-balances',
                     ],
