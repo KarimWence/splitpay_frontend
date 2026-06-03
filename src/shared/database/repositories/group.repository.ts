@@ -17,6 +17,9 @@ export const GroupRepository = {
         )
     },
 
+    deleteById: (id: string) =>
+        db.groups.delete(id),
+
     clear: () =>
         db.groups.clear(),
 }
