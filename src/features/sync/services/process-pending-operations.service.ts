@@ -3,6 +3,7 @@ import { createExpenseRequest } from '@/features/expenses/api/expenses.api'
 import { PendingOperationRepository } from '@/shared/database/repositories/pending-operation.repository'
 
 import { createSettlementRequest } from '@/features/expenses/api/expenses.api'
+import { createGroupRequest } from '@/features/groups/api/groups.api'
 
 export const processPendingOperations =
     async () => {
@@ -35,6 +36,27 @@ export const processPendingOperations =
                         processed++
                         break
                     }
+
+                    case 'CREATE_GROUP': {
+
+                        const payload =
+                            JSON.parse(
+                                operation.payload
+                            )
+
+                        await createGroupRequest(
+                            payload
+                        )
+
+                        await PendingOperationRepository.remove(
+                            operation.id
+                        )
+
+                        processed++
+
+                        break
+                    }
+
                     case 'CREATE_SETTLEMENT': {
 
                         const payload =
