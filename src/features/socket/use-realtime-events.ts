@@ -102,6 +102,83 @@ export const useRealtimeEvents = () => {
                     ],
                 })
             }
+
+
+        const onInvitationAccepted =
+            async () => {
+
+                await syncChanges()
+
+                await queryClient.invalidateQueries({
+                    queryKey: ['groups'],
+                })
+
+                await queryClient.invalidateQueries({
+                    queryKey: ['group'],
+                })
+
+                await queryClient.invalidateQueries({
+                    queryKey: [
+                        'enriched-invitations',
+                    ],
+                })
+
+                await queryClient.invalidateQueries({
+                    queryKey: [
+                        'group-activities',
+                    ],
+                })
+            }
+
+        const onInvitationRejected =
+            async () => {
+
+                await syncChanges()
+
+                await queryClient.invalidateQueries({
+                    queryKey: [
+                        'enriched-invitations',
+                    ],
+                })
+
+                await queryClient.invalidateQueries({
+                    queryKey: [
+                        'group-activities',
+                    ],
+                })
+            }
+
+        const onMemberJoined =
+            async () => {
+
+                await syncChanges()
+
+                await queryClient.invalidateQueries({
+                    queryKey: ['groups'],
+                })
+
+                await queryClient.invalidateQueries({
+                    queryKey: ['group'],
+                })
+
+                await queryClient.invalidateQueries({
+                    queryKey: [
+                        'group-activities',
+                    ],
+                })
+            }
+
+        const onNotificationCreated =
+            async () => {
+
+                await syncChanges()
+
+                await queryClient.invalidateQueries({
+                    queryKey: [
+                        'notifications',
+                    ],
+                })
+            }
         const onActivityCreated =
             async () => {
                 await syncChanges()
@@ -112,6 +189,7 @@ export const useRealtimeEvents = () => {
                     ],
                 })
             }
+
 
         socket.on(
             SOCKET_EVENTS.EXPENSE_CREATED,
@@ -126,6 +204,26 @@ export const useRealtimeEvents = () => {
         socket.on(
             SOCKET_EVENTS.MEMBER_INVITED,
             onMemberInvited
+        )
+
+        socket.on(
+            SOCKET_EVENTS.INVITATION_ACCEPTED,
+            onInvitationAccepted
+        )
+
+        socket.on(
+            SOCKET_EVENTS.INVITATION_REJECTED,
+            onInvitationRejected
+        )
+
+        socket.on(
+            SOCKET_EVENTS.MEMBER_JOINED,
+            onMemberJoined
+        )
+
+        socket.on(
+            SOCKET_EVENTS.NOTIFICATION_CREATED,
+            onNotificationCreated
         )
 
         socket.on(
@@ -145,6 +243,22 @@ export const useRealtimeEvents = () => {
             socket.off(
                 SOCKET_EVENTS.MEMBER_INVITED,
                 onMemberInvited
+            )
+            socket.off(
+                SOCKET_EVENTS.INVITATION_ACCEPTED,
+                onInvitationAccepted
+            )
+            socket.off(
+                SOCKET_EVENTS.INVITATION_REJECTED,
+                onInvitationRejected
+            )
+            socket.off(
+                SOCKET_EVENTS.MEMBER_JOINED,
+                onMemberJoined
+            )
+            socket.off(
+                SOCKET_EVENTS.NOTIFICATION_CREATED,
+                onNotificationCreated
             )
             socket.off(
                 SOCKET_EVENTS.ACTIVITY_CREATED,
